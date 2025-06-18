@@ -355,7 +355,7 @@
 
         .team-info {
             display: grid;
-            gap: 1.75rem; /* More spacing between sections */
+            gap: 2.5rem; /* Increased spacing between sections */
         }
 
         .info-section {
@@ -528,7 +528,8 @@
             <div class="teams-sidebar">
                 <div class="sidebar-title">Teams</div>
                 <div id="teamsContainer">
-                    </div>
+                    <!-- Team cards will be dynamically inserted here -->
+                </div>
             </div>
 
             <div class="content-area">
@@ -540,7 +541,8 @@
                 </div>
                 
                 <div id="teamContents">
-                    </div>
+                    <!-- Team content will be dynamically inserted here -->
+                </div>
             </div>
         </div>
     </div>
@@ -562,30 +564,6 @@
             }
             return url; // Return original if not a recognized Google Drive video link
         }
-
-        // Helper function to convert Google Slides links to embed format
-        // Google Slides embed format is generally 'https://docs.google.com/presentation/d/{FILE_ID}/embed'
-        function convertGoogleSlidesLink(url) {
-            let fileId = '';
-            
-            // Extract file ID from various Google Slides URL formats
-            if (url.includes('/presentation/d/')) {
-                // Examples:
-                // https://docs.google.com/presentation/d/FILE_ID/view
-                // https://docs.google.com/presentation/d/FILE_ID/edit
-                // https://docs.google.com/presentation/d/FILE_ID/edit?usp=sharing
-                fileId = url.match(/\/presentation\/d\/([a-zA-Z0-9_-]+)/)?.[1];
-            }
-            
-            if (fileId) {
-                return `https://docs.google.com/presentation/d/${fileId}/embed`;
-            }
-            
-            // If the URL is not a recognized Google Slides link, return it as is
-            // It might be a direct embed URL or another type of document
-            return url;
-        }
-
 
         // Team data structure - Contains all information for each team
         const teams = [
@@ -716,7 +694,6 @@
                 teamContent.setAttribute('data-team', index);
                 
                 const videoEmbedUrl = convertGoogleDriveVideoLink(team.videoLink);
-                const slidesEmbedUrl = convertGoogleSlidesLink(team.slidedeckLink);
                 
                 teamContent.innerHTML = `
                     <div class="content-header">
@@ -749,24 +726,8 @@
 
                     <div class="info-section">
                         <div class="info-title">📊 Slide Deck</div>
-                        <div class="embed-container">
-                            <iframe class="presentation-embed"
-                                    src="${slidesEmbedUrl}" 
-                                    allow="autoplay; fullscreen; picture-in-picture"
-                                    loading="lazy"
-                                    allowfullscreen
-                                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                            </iframe>
-                            <div class="embed-fallback">
-                                <div class="icon">📊</div>
-                                <div class="title">${team.name} Presentation Slides</div>
-                                <div class="message">Presentation embedding not available directly. Please use the link below to view the slides.</div>
-                                <div class="embed-buttons">
-                                    <a href="${team.slidedeckLink}" target="_blank" class="embed-btn">
-                                        📄 View Slides
-                                    </a>
-                                </div>
-                            </div>
+                        <div class="info-content">
+                            <a href="${team.slidedeckLink}" target="_blank" class="info-link">View Presentation Slides</a>
                         </div>
                     </div>
                         
@@ -818,9 +779,8 @@
             if (selectedContent) {
                 selectedContent.classList.add('active');
 
-                // Handle iframe loading issues with fallback for both video and presentation
+                // Handle iframe loading issues with fallback for video only
                 setTimeout(() => {
-                    // Video iframe handling
                     const videoIframe = selectedContent.querySelector('.video-embed');
                     const videoFallback = videoIframe?.nextElementSibling; // Get the next sibling (fallback div)
                     if (videoIframe && videoIframe.style.display === 'none') {
@@ -830,18 +790,6 @@
                     } else if (videoIframe && videoFallback) {
                         videoFallback.style.display = 'none';
                     }
-
-                    // Presentation iframe handling
-                    const presentationIframe = selectedContent.querySelector('.presentation-embed');
-                    const presentationFallback = presentationIframe?.nextElementSibling; // Get the next sibling (fallback div)
-                    if (presentationIframe && presentationIframe.style.display === 'none') {
-                        if (presentationFallback) {
-                            presentationFallback.style.display = 'flex';
-                        }
-                    } else if (presentationIframe && presentationFallback) {
-                        presentationFallback.style.display = 'none';
-                    }
-
                 }, 500); // Small delay to allow iframes to attempt loading
             }
         }
