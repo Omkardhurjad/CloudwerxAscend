@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agent Ascent - Team Showcase</title>
+    <title>Hackathon 2025 - Team Showcase</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         /* Base styles and resets */
@@ -15,30 +15,39 @@
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #2563eb 100%); /* Deep blue gradient */
-            min-height: 100vh;
+            min-height: 100vh; /* Ensure body can hold content */
             color: #333;
             display: flex;
             flex-direction: column;
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #2563eb 100%); /* Apply gradient to body */
         }
 
-        .container {
-            max-width: 1600px;
-            margin: 0 auto;
-            padding: 2rem;
-            width: 100%;
-            flex-grow: 1; /* Allow container to grow and take available space */
+        /* Landing Section - Covers initial full page view */
+        #landingSection {
+            height: 100vh; /* Make it cover the full viewport height */
             display: flex;
             flex-direction: column;
+            justify-content: center; /* Center content vertically */
+            align-items: center; /* Center content horizontally */
+            position: relative; /* For absolute positioning of the arrow */
+            padding: 2rem; /* Consistent padding */
+            text-align: center; /* Ensure text alignment */
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #2563eb 100%); /* Apply background here for initial view */
+            color: white; /* Ensure text color is white here */
+            flex-shrink: 0; /* Prevent it from shrinking */
         }
 
         /* Header styles */
         .header {
+            width: 100%; /* Take full width of parent (#landingSection) */
             text-align: center;
-            margin-bottom: 2rem;
             color: white;
-            padding-bottom: 1rem;
-            position: relative; /* Needed for positioning the vote button */
+            position: relative; /* Needed for positioning the vote button, even if it's not absolute */
+            max-width: 1200px; /* Limit header width within landing section */
+            margin-bottom: 2rem; /* Space below header content before arrow */
+            display: flex; /* Use flex to arrange items vertically */
+            flex-direction: column;
+            align-items: center; /* Center items horizontally within flex container */
         }
 
         .header .logo-container {
@@ -87,7 +96,6 @@
             font-size: 1.2rem; /* Larger subtitle */
             opacity: 0.95;
             text-shadow: 0 1px 2px rgba(0,0,0,0.2);
-            margin-bottom: 0.5rem; /* Space before marquee */
         }
 
         /* Marquee styles */
@@ -98,12 +106,12 @@
             padding: 0.5rem 0;
             text-shadow: 0 1px 2px rgba(0,0,0,0.3);
             white-space: nowrap; /* Ensure text stays on one line within marquee */
+            margin-top: 0.5rem; /* Space below subtitle */
+            margin-bottom: 1rem; /* Space below marquee */
         }
+
         /* Vote button styles */
         .vote-button {
-            position: absolute;
-            top: 2rem;
-            right: 2rem;
             background-color: #f97316; /* Orange color */
             color: white;
             padding: 0.8rem 1.5rem;
@@ -113,16 +121,54 @@
             font-size: 1rem;
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
             transition: all 0.3s ease;
-            display: inline-flex;
+            display: inline-flex; /* Use inline-flex to keep icon/text alignment */
             align-items: center;
             gap: 8px;
             border: 2px solid #ea580c;
+            /* No absolute positioning now */
+            margin-top: 1rem; /* Space above the button */
         }
 
         .vote-button:hover {
             background-color: #ea580c;
             transform: translateY(-3px);
             box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+        }
+
+        /* Scroll Down Arrow */
+        .scroll-down-arrow {
+            position: absolute;
+            bottom: 2rem; /* Distance from the bottom of the landing section */
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 3rem; /* Larger arrow */
+            color: white;
+            cursor: pointer;
+            animation: bounce 2s infinite; /* Add a subtle bounce animation */
+            z-index: 10; /* Ensure it's above other content if overlapping */
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-15px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-7px);
+            }
+        }
+
+        /* Main content container - this is what comes after the landing section */
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2rem;
+            width: 100%;
+            flex-grow: 1; /* Allow container to grow and take available space */
+            display: flex;
+            flex-direction: column;
         }
 
         /* Main content layout */
@@ -141,29 +187,28 @@
             border-radius: 20px;
             padding: 1.5rem;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            /* Important for independent scrolling and filling height */
             display: flex; /* Use flex to make inner content push to top */
             flex-direction: column;
             overflow-y: auto; /* Allow scrolling if content overflows */
             height: 100%; /* Fill parent height */
-            position: relative; /* Needed for absolute positioning of content */
+            position: relative;
         }
 
         .sidebar-title {
-            font-size: 1.4rem; /* Slightly larger */
-            font-weight: 700; /* Bolder */
+            font-size: 1.4rem;
+            font-weight: 700;
             color: #1e3a8a;
             margin-bottom: 1rem;
             text-align: center;
             padding-bottom: 0.75rem;
-            border-bottom: 2px solid #cbd5e1; /* Darker border */
-            flex-shrink: 0; /* Prevent title from shrinking */
+            border-bottom: 2px solid #cbd5e1;
+            flex-shrink: 0;
         }
 
         #teamsContainer {
-            flex-grow: 1; /* Allow the team cards container to take remaining space */
-            overflow-y: auto; /* Ensure only the cards scroll, not the title */
-            padding-right: 5px; /* Add some padding for scrollbar if present */
+            flex-grow: 1;
+            overflow-y: auto;
+            padding-right: 5px;
         }
         
         /* Custom scrollbar for WebKit browsers */
@@ -188,41 +233,41 @@
 
         .team-card {
             background: white;
-            border-radius: 15px; /* More rounded */
-            padding: 1rem 1.25rem; /* More horizontal padding */
+            border-radius: 15px;
+            padding: 1rem 1.25rem;
             margin-bottom: 0.75rem;
             cursor: pointer;
             transition: all 0.3s ease;
             border: 2px solid transparent;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* More pronounced shadow */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
             display: flex;
             flex-direction: column;
             justify-content: center;
-            min-height: 80px; /* Minimum height for touch target */
+            min-height: 80px;
         }
 
         .team-card:hover {
-            transform: translateY(-3px); /* Lift effect */
+            transform: translateY(-3px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-            border-color: #a7bedd; /* Subtle blue border on hover */
+            border-color: #a7bedd;
         }
 
         .team-card.active {
             background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #2563eb 100%);
             color: white;
-            transform: translateY(-5px); /* More pronounced lift when active */
+            transform: translateY(-5px);
             box-shadow: 0 10px 25px rgba(30, 58, 138, 0.4);
-            border-color: #ffffff; /* White border for active */
+            border-color: #ffffff;
         }
 
         .team-name {
-            font-size: 1.2rem; /* Larger team name */
+            font-size: 1.2rem;
             font-weight: 700;
             margin-bottom: 0.3rem;
         }
 
         .team-captain {
-            font-size: 0.9rem; /* Slightly larger */
+            font-size: 0.9rem;
             opacity: 0.85;
         }
 
@@ -235,10 +280,10 @@
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             border-radius: 20px;
-            padding: 2.5rem; /* More padding */
+            padding: 2.5rem;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            overflow-y: auto; /* Independent scrolling for content */
-            height: 100%; /* Fill parent height */
+            overflow-y: auto;
+            height: 100%;
         }
 
         /* Custom scrollbar for WebKit browsers */
@@ -266,7 +311,7 @@
             justify-content: center;
             height: 100%;
             color: #64748b;
-            font-size: 1.4rem; /* Larger placeholder text */
+            font-size: 1.4rem;
             text-align: center;
             flex-direction: column;
         }
@@ -278,18 +323,17 @@
 
         .team-content.active {
             display: block;
-            /* Added min-height to ensure content always takes some space */
-            min-height: calc(100% - 4rem); /* Adjust based on padding */
+            min-height: calc(100% - 4rem);
         }
 
         .content-header {
-            margin-bottom: 2.5rem; /* More space below header */
+            margin-bottom: 2.5rem;
             border-bottom: 2px solid #e2e8f0;
             padding-bottom: 1.5rem;
         }
 
         .content-team-name {
-            font-size: 2.5rem; /* Larger team name in content */
+            font-size: 2.5rem;
             font-weight: 800;
             color: #1e3a8a;
             margin-bottom: 0.75rem;
@@ -310,7 +354,7 @@
             border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #2563eb 100%); /* Placeholder background */
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #2563eb 100%);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -324,7 +368,7 @@
             height: 100%;
             border: none;
             border-radius: 15px;
-            background-color: black; /* Ensure black background for videos */
+            background-color: black;
         }
 
         /* Fallback for embedding when fails */
@@ -334,8 +378,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 2; /* Ensure it's above the iframe when active */
-            display: none; /* Hidden by default */
+            z-index: 2;
+            display: none;
             flex-direction: column;
             align-items: center;
             justify-content: center;
@@ -345,12 +389,12 @@
         }
 
         .embed-fallback .icon {
-            font-size: 4rem; /* Larger icon */
+            font-size: 4rem;
             margin-bottom: 1rem;
         }
 
         .embed-fallback .title {
-            font-size: 1.8rem; /* Larger title */
+            font-size: 1.8rem;
             font-weight: 700;
             margin-bottom: 0.75rem;
         }
@@ -361,21 +405,21 @@
             opacity: 0.9;
         }
 
-        .embed-buttons { /* Unified style for video and slide buttons */
+        .embed-buttons {
             display: flex;
             gap: 1rem;
             margin-top: 1rem;
-            flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+            flex-wrap: wrap;
             justify-content: center;
         }
 
-        .embed-btn { /* Unified style for video and slide buttons */
+        .embed-btn {
             background: rgba(255,255,255,0.2);
             color: white;
             text-decoration: none;
             padding: 12px 24px;
             border-radius: 25px;
-            font-weight: 600; /* Bolder text */
+            font-weight: 600;
             transition: all 0.3s ease;
             border: 1px solid rgba(255,255,255,0.3);
             display: inline-flex;
@@ -386,40 +430,40 @@
 
         .embed-btn:hover {
             background: rgba(255,255,255,0.3);
-            transform: translateY(-3px); /* Lift effect */
+            transform: translateY(-3px);
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
         .team-info {
             display: grid;
-            gap: 2.5rem; /* Increased spacing between sections */
+            gap: 2.5rem;
         }
 
         .info-section {
             background: #f8fafc;
-            padding: 1.75rem; /* More padding */
+            padding: 1.75rem;
             border-radius: 15px;
-            border-left: 5px solid #1e3a8a; /* Thicker border */
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05); /* Subtle shadow */
+            border-left: 5px solid #1e3a8a;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
 
         .info-title {
-            font-weight: 700; /* Bolder */
+            font-weight: 700;
             color: #1e3a8a;
             margin-bottom: 0.75rem;
-            font-size: 1.2rem; /* Larger title */
+            font-size: 1.2rem;
         }
 
         .info-content {
             color: #475569;
-            line-height: 1.7; /* Better readability */
+            line-height: 1.7;
             font-size: 1rem;
         }
 
         .info-link {
             color: #1e3a8a;
             text-decoration: none;
-            font-weight: 600; /* Bolder link text */
+            font-weight: 600;
             transition: color 0.2s ease, text-decoration 0.2s ease;
         }
 
@@ -439,19 +483,18 @@
             .content-team-name {
                 font-size: 2.2rem;
             }
+            /* Vote button responsive adjustment within header's flex container */
             .vote-button {
-                top: 1.5rem;
-                right: 1.5rem;
                 padding: 0.7rem 1.3rem;
                 font-size: 0.9rem;
             }
         }
 
         @media (max-width: 968px) {
-            .container {
-                padding: 1rem;
+            #landingSection {
+                padding: 1rem; /* Adjust padding for smaller screens */
             }
-            
+
             .header h1 {
                 font-size: 2.2rem;
             }
@@ -489,19 +532,21 @@
                 width: 100%; /* Full width buttons */
                 max-width: 250px; /* Limit width for aesthetics */
             }
+            /* Vote button should be naturally placed in the header's flex flow */
             .vote-button {
-                position: static; /* Remove absolute positioning on small screens */
                 margin-top: 1rem; /* Add margin to separate from other header elements */
                 width: fit-content;
-                align-self: center; /* Center the button in flex container */
-                margin-left: auto;
-                margin-right: auto;
             }
             .header {
-                display: flex;
+                /* display: flex; already set */
                 flex-direction: column;
                 align-items: center;
                 text-align: center;
+                margin-bottom: 1rem; /* Adjust margin for mobile header */
+            }
+            .scroll-down-arrow {
+                font-size: 2.5rem; /* Smaller arrow on mobile */
+                bottom: 1.5rem; /* Closer to bottom on mobile */
             }
         }
 
@@ -520,7 +565,7 @@
             }
 
             .embed-container {
-                padding-bottom: 65%; /* Adjust aspect ratio for smaller screens if needed */
+                padding-bottom: 65%;
             }
             .embed-fallback .icon {
                 font-size: 3rem;
@@ -563,19 +608,17 @@
                 font-size: 0.95rem;
             }
             .embed-container {
-                padding-bottom: 75%; /* More height on very small screens */
+                padding-bottom: 75%;
+            }
+            .scroll-down-arrow {
+                font-size: 2rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div id="landingSection">
         <div class="header">
-            <!-- Vote Button -->
-            <a href="https://forms.gle/YOUR_GOOGLE_FORMS_LINK_HERE" target="_blank" class="vote-button">
-                🗳️ Vote Now!
-            </a>
-
             <div class="logo-container">
                 <div class="logo">
                     <img src="https://github.com/Omkardhurjad/test/blob/main/images.png?raw=true" alt="Cloudwerx Logo">
@@ -588,8 +631,18 @@
             <marquee class="event-marquee" behavior="scroll" direction="left" scrollamount="5">
                 🌟 Don't forget to cast your vote for your favorite teams! Voting closes soon! 🌟
             </marquee>
+            <!-- Vote Button - Moved here, below the marquee -->
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSetHmFRuscmQSudE3iugcu5duIvWv4sXtMsUP3QmHc65jMHPA/viewform?usp=sharing&ouid=116365547337978111923" target="_blank" class="vote-button">
+                🗳️ Vote Now!
+            </a>
         </div>
+        <!-- Scroll Down Arrow -->
+        <div class="scroll-down-arrow" id="scrollDownArrow">
+            ⬇️
+        </div>
+    </div>
 
+    <div class="container">
         <div class="main-content">
             <div class="teams-sidebar">
                 <div class="sidebar-title">Teams</div>
@@ -895,6 +948,22 @@
         // Initialize the application when the DOM is fully loaded
         document.addEventListener('DOMContentLoaded', function() {
             generateTeamElements();
+
+            // Get a reference to the main content area
+            const mainContent = document.querySelector('.container'); // Target the .container which holds main content
+
+            // Get a reference to the scroll-down arrow
+            const scrollDownArrow = document.getElementById('scrollDownArrow');
+
+            // Add a click event listener to the arrow
+            if (scrollDownArrow && mainContent) {
+                scrollDownArrow.addEventListener('click', () => {
+                    // Scroll smoothly to the main content area
+                    mainContent.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            }
         });
     </script>
 </body>
