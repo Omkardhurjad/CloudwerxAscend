@@ -1,921 +1,789 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hackathon 2025 - Team Showcase</title>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-      /* Base styles and resets */
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      body {
-        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
-          sans-serif;
-        background: linear-gradient(
-          135deg,
-          #1e3a8a 0%,
-          #1e40af 50%,
-          #2563eb 100%
-        ); /* Deep blue gradient */
-        min-height: 100vh;
-        color: #333;
-        display: flex;
-        flex-direction: column;
-      }
-
-      .container {
-        max-width: 1600px;
-        margin: 0 auto;
-        padding: 2rem;
-        width: 100%;
-        flex-grow: 1; /* Allow container to grow and take available space */
-        display: flex;
-        flex-direction: column;
-      }
-
-      /* Header styles */
-      .header {
-        text-align: center;
-        margin-bottom: 2rem;
-        color: white;
-        padding-bottom: 1rem;
-        position: relative; /* Needed for positioning the vote button */
-      }
-
-      .header .logo-container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 1rem;
-        gap: 1rem;
-      }
-
-      .header .logo {
-        width: 60px; /* Increased size for image */
-        height: 60px;
-        background: white;
-        border-radius: 12px; /* Slightly more rounded */
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 8px; /* Slightly more padding */
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow for logo */
-      }
-
-      .header .logo img {
-        width: 100%;
-        height: 100%;
-        object-fit: contain; /* Ensure image fits without distortion */
-        border-radius: 8px; /* Match outer border radius */
-      }
-
-      .header .brand-text {
-        font-size: 1.8rem; /* Larger brand text */
-        font-weight: 700;
-        color: white;
-        letter-spacing: 1.5px; /* More spacing */
-        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-      }
-
-      .header h1 {
-        font-size: 3rem; /* Larger main title */
-        font-weight: 800; /* Bolder */
-        margin-bottom: 0.75rem;
-        text-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
-      }
-
-      .header p {
-        font-size: 1.2rem; /* Larger subtitle */
-        opacity: 0.95;
-        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-        margin-bottom: 0.5rem; /* Space before marquee */
-      }
-
-      /* Marquee styles */
-      .header .event-marquee {
-        font-size: 1.1rem;
-        color: #a3e635; /* Bright green for attention */
-        font-weight: 600;
-        padding: 0.5rem 0;
-        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-        white-space: nowrap; /* Ensure text stays on one line within marquee */
-      }
-      /* Vote button styles */
-      .vote-button {
-        position: absolute;
-        top: 2rem;
-        right: 2rem;
-        background-color: #f97316; /* Orange color */
-        color: white;
-        padding: 0.8rem 1.5rem;
-        border-radius: 25px;
-        text-decoration: none;
-        font-weight: 700;
-        font-size: 1rem;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        transition: all 0.3s ease;
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        border: 2px solid #ea580c;
-      }
-
-      .vote-button:hover {
-        background-color: #ea580c;
-        transform: translateY(-3px);
-        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-      }
-
-      /* Main content layout */
-      .main-content {
-        display: grid;
-        grid-template-columns: 400px 1fr; /* Fixed sidebar width, flexible content */
-        gap: 2rem;
-        flex-grow: 1; /* Allow main content to take remaining space */
-        min-height: 600px; /* Minimum height for desktop */
-      }
-
-      /* Teams sidebar */
-      .teams-sidebar {
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(10px);
-        border-radius: 20px;
-        padding: 1.5rem;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-        /* Important for independent scrolling and filling height */
-        display: flex; /* Use flex to make inner content push to top */
-        flex-direction: column;
-        overflow-y: auto; /* Allow scrolling if content overflows */
-        height: 100%; /* Fill parent height */
-        position: relative; /* Needed for absolute positioning of content */
-      }
-
-      .sidebar-title {
-        font-size: 1.4rem; /* Slightly larger */
-        font-weight: 700; /* Bolder */
-        color: #1e3a8a;
-        margin-bottom: 1rem;
-        text-align: center;
-        padding-bottom: 0.75rem;
-        border-bottom: 2px solid #cbd5e1; /* Darker border */
-        flex-shrink: 0; /* Prevent title from shrinking */
-      }
-
-      #teamsContainer {
-        flex-grow: 1; /* Allow the team cards container to take remaining space */
-        overflow-y: auto; /* Ensure only the cards scroll, not the title */
-        padding-right: 5px; /* Add some padding for scrollbar if present */
-      }
-
-      /* Custom scrollbar for WebKit browsers */
-      #teamsContainer::-webkit-scrollbar {
-        width: 8px;
-      }
-
-      #teamsContainer::-webkit-scrollbar-track {
-        background: #f1f1f1;
-        border-radius: 10px;
-      }
-
-      #teamsContainer::-webkit-scrollbar-thumb {
-        background: #888;
-        border-radius: 10px;
-      }
-
-      #teamsContainer::-webkit-scrollbar-thumb:hover {
-        background: #555;
-      }
-
-      .team-card {
-        background: white;
-        border-radius: 15px; /* More rounded */
-        padding: 1rem 1.25rem; /* More horizontal padding */
-        margin-bottom: 0.75rem;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        border: 2px solid transparent;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* More pronounced shadow */
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        min-height: 80px; /* Minimum height for touch target */
-      }
-
-      .team-card:hover {
-        transform: translateY(-3px); /* Lift effect */
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-        border-color: #a7bedd; /* Subtle blue border on hover */
-      }
-
-      .team-card.active {
-        background: linear-gradient(
-          135deg,
-          #1e3a8a 0%,
-          #1e40af 50%,
-          #2563eb 100%
-        );
-        color: white;
-        transform: translateY(-5px); /* More pronounced lift when active */
-        box-shadow: 0 10px 25px rgba(30, 58, 138, 0.4);
-        border-color: #ffffff; /* White border for active */
-      }
-
-      .team-name {
-        font-size: 1.2rem; /* Larger team name */
-        font-weight: 700;
-        margin-bottom: 0.3rem;
-      }
-
-      .team-captain {
-        font-size: 0.9rem; /* Slightly larger */
-        opacity: 0.85;
-      }
-
-      .team-card.active .team-captain {
-        opacity: 0.95;
-      }
-
-      /* Content area */
-      .content-area {
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(10px);
-        border-radius: 20px;
-        padding: 2.5rem; /* More padding */
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-        overflow-y: auto; /* Independent scrolling for content */
-        height: 100%; /* Fill parent height */
-      }
-
-      /* Custom scrollbar for WebKit browsers */
-      .content-area::-webkit-scrollbar {
-        width: 8px;
-      }
-
-      .content-area::-webkit-scrollbar-track {
-        background: #f1f1f1;
-        border-radius: 10px;
-      }
-
-      .content-area::-webkit-scrollbar-thumb {
-        background: #888;
-        border-radius: 10px;
-      }
-
-      .content-area::-webkit-scrollbar-thumb:hover {
-        background: #555;
-      }
-
-      .content-placeholder {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100%;
-        color: #64748b;
-        font-size: 1.4rem; /* Larger placeholder text */
-        text-align: center;
-        flex-direction: column;
-      }
-
-      .team-content {
-        display: none;
-        height: 100%;
-      }
-
-      .team-content.active {
-        display: block;
-        /* Added min-height to ensure content always takes some space */
-        min-height: calc(100% - 4rem); /* Adjust based on padding */
-      }
-
-      .content-header {
-        margin-bottom: 2.5rem; /* More space below header */
-        border-bottom: 2px solid #e2e8f0;
-        padding-bottom: 1.5rem;
-      }
-
-      .content-team-name {
-        font-size: 2.5rem; /* Larger team name in content */
-        font-weight: 800;
-        color: #1e3a8a;
-        margin-bottom: 0.75rem;
-      }
-
-      .content-captain {
-        color: #64748b;
-        font-size: 1.2rem;
-        font-weight: 500;
-      }
-
-      /* Reusable embed container styles */
-      .embed-container {
-        position: relative;
-        width: 100%;
-        padding-bottom: 56.25%; /* 16:9 aspect ratio */
-        margin-bottom: 2rem;
-        border-radius: 15px;
-        overflow: hidden;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-        background: linear-gradient(
-          135deg,
-          #1e3a8a 0%,
-          #1e40af 50%,
-          #2563eb 100%
-        ); /* Placeholder background */
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .embed-container iframe {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        border: none;
-        border-radius: 15px;
-        background-color: black; /* Ensure black background for videos */
-      }
-
-      /* Fallback for embedding when fails */
-      .embed-fallback {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 2; /* Ensure it's above the iframe when active */
-        display: none; /* Hidden by default */
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 2rem;
-        color: white;
-        text-align: center;
-      }
-
-      .embed-fallback .icon {
-        font-size: 4rem; /* Larger icon */
-        margin-bottom: 1rem;
-      }
-
-      .embed-fallback .title {
-        font-size: 1.8rem; /* Larger title */
-        font-weight: 700;
-        margin-bottom: 0.75rem;
-      }
-
-      .embed-fallback .message {
-        font-size: 1.1rem;
-        margin-bottom: 1.5rem;
-        opacity: 0.9;
-      }
-
-      .embed-buttons {
-        /* Unified style for video and slide buttons */
-        display: flex;
-        gap: 1rem;
-        margin-top: 1rem;
-        flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
-        justify-content: center;
-      }
-
-      .embed-btn {
-        /* Unified style for video and slide buttons */
-        background: rgba(255, 255, 255, 0.2);
-        color: white;
-        text-decoration: none;
-        padding: 12px 24px;
-        border-radius: 25px;
-        font-weight: 600; /* Bolder text */
-        transition: all 0.3s ease;
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-      }
-
-      .embed-btn:hover {
-        background: rgba(255, 255, 255, 0.3);
-        transform: translateY(-3px); /* Lift effect */
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-      }
-
-      .team-info {
-        display: grid;
-        gap: 2.5rem; /* Increased spacing between sections */
-      }
-
-      .info-section {
-        background: #f8fafc;
-        padding: 1.75rem; /* More padding */
-        border-radius: 15px;
-        border-left: 5px solid #1e3a8a; /* Thicker border */
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* Subtle shadow */
-      }
-
-      .info-title {
-        font-weight: 700; /* Bolder */
-        color: #1e3a8a;
-        margin-bottom: 0.75rem;
-        font-size: 1.2rem; /* Larger title */
-      }
-
-      .info-content {
-        color: #475569;
-        line-height: 1.7; /* Better readability */
-        font-size: 1rem;
-      }
-
-      .info-link {
-        color: #1e3a8a;
-        text-decoration: none;
-        font-weight: 600; /* Bolder link text */
-        transition: color 0.2s ease, text-decoration 0.2s ease;
-      }
-
-      .info-link:hover {
-        text-decoration: underline;
-        color: #2563eb;
-      }
-
-      /* Responsive adjustments */
-      @media (max-width: 1200px) {
-        .main-content {
-          grid-template-columns: 350px 1fr;
+        /* Base styles and resets */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        .header h1 {
-          font-size: 2.75rem;
-        }
-        .content-team-name {
-          font-size: 2.2rem;
-        }
-        .vote-button {
-          top: 1.5rem;
-          right: 1.5rem;
-          padding: 0.7rem 1.3rem;
-          font-size: 0.9rem;
-        }
-      }
 
-      @media (max-width: 968px) {
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #2563eb 100%); /* Deep blue gradient */
+            min-height: 100vh;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+        }
+
         .container {
-          padding: 1rem;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2rem;
+            width: 100%;
+            flex-grow: 1; /* Allow container to grow and take available space */
+            display: flex;
+            flex-direction: column;
         }
 
-        .header h1 {
-          font-size: 2.2rem;
+        /* Header styles */
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: white;
+            padding-bottom: 1rem;
+            position: relative; /* Needed for positioning the vote button */
         }
 
         .header .logo-container {
-          flex-direction: column;
-          gap: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            gap: 1rem;
+        }
+
+        .header .logo {
+            width: 60px; /* Increased size for image */
+            height: 60px;
+            background: white;
+            border-radius: 12px; /* Slightly more rounded */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px; /* Slightly more padding */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2); /* Subtle shadow for logo */
+        }
+
+        .header .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Ensure image fits without distortion */
+            border-radius: 8px; /* Match outer border radius */
         }
 
         .header .brand-text {
-          font-size: 1.5rem;
+            font-size: 1.8rem; /* Larger brand text */
+            font-weight: 700;
+            color: white;
+            letter-spacing: 1.5px; /* More spacing */
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
-        .main-content {
-          grid-template-columns: 1fr; /* Stack columns */
-          height: auto; /* Allow height to adjust */
-        }
-
-        .teams-sidebar {
-          height: auto;
-          max-height: 400px; /* Max height for scrollable sidebar on smaller screens */
-        }
-
-        .content-area {
-          height: auto; /* Allow content area to adjust height */
-          min-height: 500px; /* Minimum height for content area */
-        }
-
-        .embed-buttons {
-          flex-direction: column; /* Stack buttons */
-          align-items: center;
-        }
-
-        .embed-btn {
-          width: 100%; /* Full width buttons */
-          max-width: 250px; /* Limit width for aesthetics */
-        }
-        .vote-button {
-          position: static; /* Remove absolute positioning on small screens */
-          margin-top: 1rem; /* Add margin to separate from other header elements */
-          width: fit-content;
-          align-self: center; /* Center the button in flex container */
-          margin-left: auto;
-          margin-right: auto;
-        }
-        .header {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          text-align: center;
-        }
-      }
-
-      @media (max-width: 768px) {
-        .main-content {
-          gap: 1rem;
-        }
-
-        .teams-sidebar,
-        .content-area {
-          padding: 1.5rem;
-        }
-
-        .content-team-name {
-          font-size: 1.8rem;
-        }
-
-        .embed-container {
-          padding-bottom: 65%; /* Adjust aspect ratio for smaller screens if needed */
-        }
-        .embed-fallback .icon {
-          font-size: 3rem;
-        }
-        .embed-fallback .title {
-          font-size: 1.5rem;
-        }
-        .embed-fallback .message {
-          font-size: 1rem;
-        }
-      }
-
-      @media (max-width: 480px) {
         .header h1 {
-          font-size: 1.8rem;
+            font-size: 3rem; /* Larger main title */
+            font-weight: 800; /* Bolder */
+            margin-bottom: 0.75rem;
+            text-shadow: 0 3px 6px rgba(0,0,0,0.4);
         }
+
         .header p {
-          font-size: 1rem;
+            font-size: 1.2rem; /* Larger subtitle */
+            opacity: 0.95;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+            margin-bottom: 0.5rem; /* Space before marquee */
         }
-        .header .brand-text {
-          font-size: 1.3rem;
+
+        /* Marquee styles */
+        .header .event-marquee {
+            font-size: 1.1rem;
+            color: #a3e635; /* Bright green for attention */
+            font-weight: 600;
+            padding: 0.5rem 0;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+            white-space: nowrap; /* Ensure text stays on one line within marquee */
         }
-        .teams-sidebar,
+        /* Vote button styles */
+        .vote-button {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            background-color: #f97316; /* Orange color */
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: 2px solid #ea580c;
+        }
+
+        .vote-button:hover {
+            background-color: #ea580c;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+        }
+
+        /* Main content layout */
+        .main-content {
+            display: grid;
+            grid-template-columns: 400px 1fr; /* Fixed sidebar width, flexible content */
+            gap: 2rem;
+            flex-grow: 1; /* Allow main content to take remaining space */
+            min-height: 600px; /* Minimum height for desktop */
+        }
+
+        /* Teams sidebar */
+        .teams-sidebar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            /* Important for independent scrolling and filling height */
+            display: flex; /* Use flex to make inner content push to top */
+            flex-direction: column;
+            overflow-y: auto; /* Allow scrolling if content overflows */
+            height: 100%; /* Fill parent height */
+            position: relative; /* Needed for absolute positioning of content */
+        }
+
+        .sidebar-title {
+            font-size: 1.4rem; /* Slightly larger */
+            font-weight: 700; /* Bolder */
+            color: #1e3a8a;
+            margin-bottom: 1rem;
+            text-align: center;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid #cbd5e1; /* Darker border */
+            flex-shrink: 0; /* Prevent title from shrinking */
+        }
+
+        #teamsContainer {
+            flex-grow: 1; /* Allow the team cards container to take remaining space */
+            overflow-y: auto; /* Ensure only the cards scroll, not the title */
+            padding-right: 5px; /* Add some padding for scrollbar if present */
+        }
+        
+        /* Custom scrollbar for WebKit browsers */
+        #teamsContainer::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        #teamsContainer::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        #teamsContainer::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+
+        #teamsContainer::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+
+        .team-card {
+            background: white;
+            border-radius: 15px; /* More rounded */
+            padding: 1rem 1.25rem; /* More horizontal padding */
+            margin-bottom: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* More pronounced shadow */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 80px; /* Minimum height for touch target */
+        }
+
+        .team-card:hover {
+            transform: translateY(-3px); /* Lift effect */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            border-color: #a7bedd; /* Subtle blue border on hover */
+        }
+
+        .team-card.active {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #2563eb 100%);
+            color: white;
+            transform: translateY(-5px); /* More pronounced lift when active */
+            box-shadow: 0 10px 25px rgba(30, 58, 138, 0.4);
+            border-color: #ffffff; /* White border for active */
+        }
+
+        .team-name {
+            font-size: 1.2rem; /* Larger team name */
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }
+
+        .team-captain {
+            font-size: 0.9rem; /* Slightly larger */
+            opacity: 0.85;
+        }
+
+        .team-card.active .team-captain {
+            opacity: 0.95;
+        }
+
+        /* Content area */
         .content-area {
-          padding: 1rem;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2.5rem; /* More padding */
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            overflow-y: auto; /* Independent scrolling for content */
+            height: 100%; /* Fill parent height */
         }
+
+        /* Custom scrollbar for WebKit browsers */
+        .content-area::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .content-area::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .content-area::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+
+        .content-area::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        .content-placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: #64748b;
+            font-size: 1.4rem; /* Larger placeholder text */
+            text-align: center;
+            flex-direction: column;
+        }
+
+        .team-content {
+            display: none;
+            height: 100%;
+        }
+
+        .team-content.active {
+            display: block;
+            /* Added min-height to ensure content always takes some space */
+            min-height: calc(100% - 4rem); /* Adjust based on padding */
+        }
+
+        .content-header {
+            margin-bottom: 2.5rem; /* More space below header */
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 1.5rem;
+        }
+
         .content-team-name {
-          font-size: 1.5rem;
+            font-size: 2.5rem; /* Larger team name in content */
+            font-weight: 800;
+            color: #1e3a8a;
+            margin-bottom: 0.75rem;
         }
+
         .content-captain {
-          font-size: 1rem;
+            color: #64748b;
+            font-size: 1.2rem;
+            font-weight: 500;
         }
-        .info-section {
-          padding: 1.25rem;
-        }
-        .info-title {
-          font-size: 1.1rem;
-        }
-        .info-content {
-          font-size: 0.95rem;
-        }
+
+        /* Reusable embed container styles */
         .embed-container {
-          padding-bottom: 75%; /* More height on very small screens */
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 2rem;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #2563eb 100%); /* Placeholder background */
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-      }
+
+        .embed-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 15px;
+            background-color: black; /* Ensure black background for videos */
+        }
+
+        /* Fallback for embedding when fails */
+        .embed-fallback {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2; /* Ensure it's above the iframe when active */
+            display: none; /* Hidden by default */
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            color: white;
+            text-align: center;
+        }
+
+        .embed-fallback .icon {
+            font-size: 4rem; /* Larger icon */
+            margin-bottom: 1rem;
+        }
+
+        .embed-fallback .title {
+            font-size: 1.8rem; /* Larger title */
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .embed-fallback .message {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+
+        .embed-buttons { /* Unified style for video and slide buttons */
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+            justify-content: center;
+        }
+
+        .embed-btn { /* Unified style for video and slide buttons */
+            background: rgba(255,255,255,0.2);
+            color: white;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-weight: 600; /* Bolder text */
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .embed-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-3px); /* Lift effect */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .team-info {
+            display: grid;
+            gap: 2.5rem; /* Increased spacing between sections */
+        }
+
+        .info-section {
+            background: #f8fafc;
+            padding: 1.75rem; /* More padding */
+            border-radius: 15px;
+            border-left: 5px solid #1e3a8a; /* Thicker border */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); /* Subtle shadow */
+        }
+
+        .info-title {
+            font-weight: 700; /* Bolder */
+            color: #1e3a8a;
+            margin-bottom: 0.75rem;
+            font-size: 1.2rem; /* Larger title */
+        }
+
+        .info-content {
+            color: #475569;
+            line-height: 1.7; /* Better readability */
+            font-size: 1rem;
+        }
+
+        .info-link {
+            color: #1e3a8a;
+            text-decoration: none;
+            font-weight: 600; /* Bolder link text */
+            transition: color 0.2s ease, text-decoration 0.2s ease;
+        }
+
+        .info-link:hover {
+            text-decoration: underline;
+            color: #2563eb;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1200px) {
+            .main-content {
+                grid-template-columns: 350px 1fr;
+            }
+            .header h1 {
+                font-size: 2.75rem;
+            }
+            .content-team-name {
+                font-size: 2.2rem;
+            }
+            .vote-button {
+                top: 1.5rem;
+                right: 1.5rem;
+                padding: 0.7rem 1.3rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 968px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2.2rem;
+            }
+
+            .header .logo-container {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .header .brand-text {
+                font-size: 1.5rem;
+            }
+            
+            .main-content {
+                grid-template-columns: 1fr; /* Stack columns */
+                height: auto; /* Allow height to adjust */
+            }
+
+            .teams-sidebar {
+                height: auto;
+                max-height: 400px; /* Max height for scrollable sidebar on smaller screens */
+            }
+
+            .content-area {
+                height: auto; /* Allow content area to adjust height */
+                min-height: 500px; /* Minimum height for content area */
+            }
+
+            .embed-buttons {
+                flex-direction: column; /* Stack buttons */
+                align-items: center;
+            }
+
+            .embed-btn {
+                width: 100%; /* Full width buttons */
+                max-width: 250px; /* Limit width for aesthetics */
+            }
+            .vote-button {
+                position: static; /* Remove absolute positioning on small screens */
+                margin-top: 1rem; /* Add margin to separate from other header elements */
+                width: fit-content;
+                align-self: center; /* Center the button in flex container */
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .header {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                gap: 1rem;
+            }
+
+            .teams-sidebar,
+            .content-area {
+                padding: 1.5rem;
+            }
+
+            .content-team-name {
+                font-size: 1.8rem;
+            }
+
+            .embed-container {
+                padding-bottom: 65%; /* Adjust aspect ratio for smaller screens if needed */
+            }
+            .embed-fallback .icon {
+                font-size: 3rem;
+            }
+            .embed-fallback .title {
+                font-size: 1.5rem;
+            }
+            .embed-fallback .message {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            .header p {
+                font-size: 1rem;
+            }
+            .header .brand-text {
+                font-size: 1.3rem;
+            }
+            .teams-sidebar,
+            .content-area {
+                padding: 1rem;
+            }
+            .content-team-name {
+                font-size: 1.5rem;
+            }
+            .content-captain {
+                font-size: 1rem;
+            }
+            .info-section {
+                padding: 1.25rem;
+            }
+            .info-title {
+                font-size: 1.1rem;
+            }
+            .info-content {
+                font-size: 0.95rem;
+            }
+            .embed-container {
+                padding-bottom: 75%; /* More height on very small screens */
+            }
+        }
     </style>
-  </head>
-  <body>
+</head>
+<body>
     <div class="container">
-      <div class="header">
-        <!-- Vote Button -->
-        <a
-          href="https://docs.google.com/forms/d/e/1FAIpQLSetHmFRuscmQSudE3iugcu5duIvWv4sXtMsUP3QmHc65jMHPA/viewform?usp=sharing&ouid=116365547337978111923"
-          target="_blank"
-          class="vote-button"
-        >
-          🗳️ Vote Now!
-        </a>
+        <div class="header">
+            <!-- Vote Button -->
+            <a href="https://forms.gle/YOUR_GOOGLE_FORMS_LINK_HERE" target="_blank" class="vote-button">
+                🗳️ Vote Now!
+            </a>
 
-        <div class="logo-container">
-          <div class="logo">
-            <img
-              src="https://github.com/Omkardhurjad/test/blob/main/images.png?raw=true"
-              alt="Cloudwerx Logo"
-            />
-          </div>
-          <div class="brand-text">CLOUDWERX</div>
-        </div>
-        <h1>Hackathon 2025</h1>
-        <p>Team Showcase - 11 Amazing Projects</p>
-        <!-- Marquee below the subtitle -->
-        <marquee
-          class="event-marquee"
-          behavior="scroll"
-          direction="left"
-          scrollamount="5"
-        >
-          🌟 Don't forget to cast your vote for your favorite teams! Voting
-          closes soon! 🌟
-        </marquee>
-      </div>
-
-      <div class="main-content">
-        <div class="teams-sidebar">
-          <div class="sidebar-title">Teams</div>
-          <div id="teamsContainer">
-            <!-- Team cards will be dynamically inserted here -->
-          </div>
-        </div>
-
-        <div class="content-area">
-          <div class="content-placeholder" id="contentPlaceholder">
-            <div>
-              <div style="font-size: 3rem; margin-bottom: 1rem">👈</div>
-              <div>
-                Select a team from the sidebar to view their project details
-              </div>
+            <div class="logo-container">
+                <div class="logo">
+                    <img src="https://github.com/Omkardhurjad/test/blob/main/images.png?raw=true" alt="Cloudwerx Logo">
+                </div>
+                <div class="brand-text">CLOUDWERX</div>
             </div>
-          </div>
-
-          <div id="teamContents">
-            <!-- Team content will be dynamically inserted here -->
-          </div>
+            <h1>Hackathon 2025</h1>
+            <p>Team Showcase - 11 Amazing Projects</p>
+            <!-- Marquee below the subtitle -->
+            <marquee class="event-marquee" behavior="scroll" direction="left" scrollamount="5">
+                🌟 Don't forget to cast your vote for your favorite teams! Voting closes soon! 🌟
+            </marquee>
         </div>
-      </div>
+
+        <div class="main-content">
+            <div class="teams-sidebar">
+                <div class="sidebar-title">Teams</div>
+                <div id="teamsContainer">
+                    <!-- Team cards will be dynamically inserted here -->
+                </div>
+            </div>
+
+            <div class="content-area">
+                <div class="content-placeholder" id="contentPlaceholder">
+                    <div>
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">👈</div>
+                        <div>Select a team from the sidebar to view their project details</div>
+                    </div>
+                </div>
+                
+                <div id="teamContents">
+                    <!-- Team content will be dynamically inserted here -->
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
-      // Helper function to convert Google Drive video links to embed format
-      // Google Drive embed format is generally 'https://drive.google.com/file/d/{FILE_ID}/preview'
-      function convertGoogleDriveVideoLink(url) {
-        let fileId = "";
-
-        if (url.includes("/file/d/")) {
-          fileId = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/)?.[1];
-        } else if (url.includes("id=")) {
-          fileId = url.match(/id=([a-zA-Z0-9_-]+)/)?.[1];
+        // Helper function to convert Google Drive video links to embed format
+        // Google Drive embed format is generally 'https://drive.google.com/file/d/{FILE_ID}/preview'
+        function convertGoogleDriveVideoLink(url) {
+            let fileId = '';
+            
+            if (url.includes('/file/d/')) {
+                fileId = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/)?.[1];
+            } else if (url.includes('id=')) {
+                fileId = url.match(/id=([a-zA-Z0-9_-]+)/)?.[1];
+            }
+            
+            if (fileId) {
+                return `https://drive.google.com/file/d/${fileId}/preview`;
+            }
+            return url; // Return original if not a recognized Google Drive video link
         }
 
-        if (fileId) {
-          return `https://drive.google.com/file/d/${fileId}/preview`;
-        }
-        return url; // Return original if not a recognized Google Drive video link
-      }
+        // Team data structure - Contains all information for each team
+        const teams = [
+            {
+                name: "AgentX",
+                captain: "Team Captain Name",
+                videoLink: "https://drive.google.com/file/d/1N12k1yjf8FnQh4ahslgWq_ycBkn4v-ZS/view?usp=drive_link",
+                slidedeckLink: "https://docs.google.com/presentation/your-slides", // Placeholder, will show fallback
+                problemSolution: "Our team identified the challenge of automated customer service responses and developed an AI-powered agent that can handle complex queries with 95% accuracy, reducing response time from hours to seconds.",
+                architectureLink: "https://your-architecture-diagram-link.com", // Placeholder
+                impactMetrics: "Expected 40% reduction in customer service costs, 60% improvement in response time, and potential ROI of 300% within first year of implementation.",
+                bestCollaboration: "Our team effectively utilized agile methodologies, holding daily stand-ups and leveraging collaborative coding tools to ensure seamless integration of components and rapid iteration. Each member took ownership of distinct modules while maintaining open communication channels, leading to efficient problem-solving and a highly cohesive final product.",
+                bestAI: "AgentX employs a novel hybrid AI architecture combining a deep learning neural network for natural language understanding with a rules-based expert system for critical decision-making. This allows for both nuanced conversational abilities and robust adherence to predefined business logic, setting a new standard for intelligent automation in customer service."
+            },
+            {
+                name: "The AIvengers",
+                captain: "Mehul Shah",
+                videoLink: "https://drive.google.com/file/d/1hbfrXdQVdQsMJzSeTi8NNQCpQ0VRQY5f/view?usp=sharing",
+                slidedeckLink: "https://docs.google.com/presentation/d/1gPnUZSezgzzuin8F-3--0LBAN_jzkjzw5TcFukpawic/edit?usp=sharing",
+                problemSolution: "We tackled the issue of data silos in enterprise environments by creating an intelligent data integration platform that uses ML to automatically map and synchronize data across different systems.",
+                architectureLink: "https://drive.google.com/file/d/1lHWkAIwiME3SB1MRhT5IkSWNVNN_x2Ps/view?usp=drive_link",
+                impactMetrics: "Ask from anywhere - users can fetch information from Slack , Personalized & relevant information retrieval, Faster answers",
+                bestCollaboration: "The AIvengers demonstrated exceptional cross-functional collaboration, with team members from diverse backgrounds (data science, UX design, backend engineering) working in sync. We established clear communication protocols and used a shared knowledge base, which allowed us to quickly adapt to challenges and integrate complex components efficiently.",
+                bestAI: "Our data integration platform utilizes a self-learning ML model that continuously optimizes data mapping and synchronization rules based on usage patterns and feedback. This intelligent automation not only reduces manual effort but also improves data quality and consistency across disparate enterprise systems over time."
+            },
+            {
+                name: "Ctrl+Alt+Elite",
+                captain: "Team Captain Name",
+                videoLink: "https://drive.google.com/file/d/1pm24zoCM4Xl7Kl0VKPTLv3jpgqwEAna0/view?usp=sharing",
+                slidedeckLink: "https://docs.google.com/presentation/d/1gPnUZSezgzzuin8F-3--0LBAN_jzkjzw5TcFukpawic/edit?slide=id.p1#slide=id.p1",
+                problemSolution: "Test",
+                architectureLink: "https://your-architecture-diagram-link.com", // Placeholder
+                impactMetrics: "N/A", // Add a placeholder or actual metric
+                bestCollaboration: "N/A",
+                bestAI: "N/A"
+            },
+            {
+                name: "InsightHackers",
+                captain: "Team Captain Name",
+                videoLink: "https://drive.google.com/file/d/1NOYnCLSNkhsRpGJLZdu9lAAu2tkTXTqS/view?usp=drive_link",
+                slidedeckLink: "https://docs.google.com/presentation/your-slides", // Placeholder
+                problemSolution: "We developed an advanced analytics platform that transforms raw business data into actionable insights using natural language processing and predictive modeling.",
+                architectureLink: "https://your-architecture-diagram-link.com", // Placeholder
+                impactMetrics: "35% improvement in decision-making speed, 28% increase in revenue prediction accuracy, and 200% ROI within 18 months.",
+                bestCollaboration: "The InsightHackers embraced a highly iterative and feedback-driven approach. We conducted daily pair-programming sessions and frequent internal demos, ensuring that everyone was aligned and contributing to the core vision. Our use of a shared development environment and clear version control practices minimized conflicts and maximized collective output.",
+                bestAI: "Our analytics platform features a sophisticated NLP engine that can derive nuanced insights from unstructured text data, combined with a predictive modeling component that forecasts future trends with high accuracy. The AI's ability to learn from diverse datasets and adapt its predictions makes it a powerful tool for strategic business intelligence."
+            },
+            {
+                name: "AI Wizards",
+                captain: "Team Captain Name",
+                videoLink: "https://drive.google.com/file/d/16skjlQgdoR_jNfVvWDxAiIAQKAfvDiuB/view?usp=drive_link",
+                slidedeckLink: "https://docs.google.com/presentation/your-slides", // Placeholder
+                problemSolution: "Our team created an intelligent code review system that uses machine learning to automatically detect bugs, security vulnerabilities, and suggest optimizations in real-time.",
+                architectureLink: "https://your-architecture-diagram-link.com", // Placeholder
+                impactMetrics: "70% reduction in code review time, 45% decrease in production bugs, estimated $500K annual savings in development costs.",
+                bestCollaboration: "AI Wizards fostered a culture of continuous learning and mutual support. We organized regular knowledge-sharing sessions and peer reviews, which not only improved code quality but also upskilled every team member. Our collective dedication to open-source contributions also strengthened our team bond.",
+                bestAI: "The intelligent code review system leverages a custom-trained machine learning model on a vast dataset of secure and insecure code patterns. Its real-time suggestions and proactive bug detection capabilities, including zero-day vulnerability identification, demonstrate a cutting-edge application of AI in software development, significantly improving code integrity and security posture."
+            },
+            {
+                name: "LLMao Squad",
+                captain: "Team Captain Name",
+                videoLink: "https://drive.google.com/file/d/1wgHDbN6Si4V_EH9zd_CxGRPB-dlYrVSz/view?usp=drive_link",
+                slidedeckLink: "https://docs.google.com/presentation/your-slides", // Placeholder
+                problemSolution: "We built a personalized learning assistant that adapts to individual learning styles and provides customized educational content using large language models and cognitive science principles.",
+                architectureLink: "https://your-architecture-diagram-link.com", // Placeholder
+                impactMetrics: "60% improvement in learning retention, 40% reduction in study time, potential to impact 10M+ students globally.",
+                bestCollaboration: "LLMao Squad excelled in distributed collaboration, with team members across different time zones. We established a 'follow-the-sun' development model, passing work seamlessly and ensuring constant progress. Regular virtual brainstorming sessions and a strong emphasis on async communication kept everyone connected and productive.",
+                bestAI: "Our personalized learning assistant is powered by a fine-tuned Large Language Model (LLM) that not only generates adaptive educational content but also analyzes user engagement and performance data to dynamically adjust learning paths. This innovative application of LLMs creates a truly individualized learning experience, enhancing comprehension and retention at scale."
+            },
+            {
+                name: "Cloudwerx Agents",
+                captain: "Team Captain Name",
+                videoLink: "https://drive.google.com/file/d/10hqaTL0roeQ_qWfW4betcyamgDXAFMH-/view?usp=drive_link",
+                slidedeckLink: "https://docs.google.com/presentation/your-slides", // Placeholder
+                problemSolution: "Our solution optimizes cloud infrastructure costs by implementing intelligent resource management that automatically scales and allocates resources based on predictive usage patterns.",
+                architectureLink: "https://your-architecture-diagram-link.com", // Placeholder
+                impactMetrics: "30-50% reduction in cloud costs, 99.9% uptime guarantee, projected savings of $1M+ annually for enterprise clients.",
+                bestCollaboration: "Cloudwerx Agents fostered an environment of radical transparency and shared responsibility. We used real-time project management tools to track progress and identify blockers, and actively sought diverse perspectives in all decision-making processes. Our joint commitment to quality assurance ensured a robust and reliable solution.",
+                bestAI: "The core of our cloud cost optimization solution is an AI-driven predictive analytics engine that forecasts resource demands with unprecedented accuracy. By leveraging historical data and real-time metrics, the AI dynamically adjusts resource allocation, minimizing idle capacity and maximizing cost efficiency, representing a significant advancement in cloud financial operations."
+            },
+            {
+                name: "Rising Cyber Brains (RCB)",
+                captain: "Team Captain Name",
+                videoLink: "https://drive.google.com/file/d/1ZxXEJCBtKALvEVCx2nDp7p5jJbY7MooV/view?usp=drive_link",
+                slidedeckLink: "https://docs.google.com/presentation/your-slides", // Placeholder
+                problemSolution: "We developed a comprehensive cybersecurity training platform that uses gamification and AI to create personalized security awareness programs for organizations.",
+                architectureLink: "https://your-architecture-diagram-link.com", // Placeholder
+                impactMetrics: "85% improvement in security awareness scores, 60% reduction in human-error security incidents, ROI of 400% through prevented breaches.",
+                bestCollaboration: "RCB demonstrated exceptional synergy, with each member contributing their unique expertise in cybersecurity and gamification. We held immersive workshops to align on design principles and regularly cross-trained each other on different modules, creating a highly adaptable and resilient team.",
+                bestAI: "Our cybersecurity training platform integrates an AI engine that analyzes user behavior and performance to create highly personalized gamified learning paths. This adaptive AI identifies individual weaknesses and targets training effectively, leading to significant improvements in security awareness and a measurable reduction in human-error vulnerabilities across organizations."
+            },
+            {
+                name: "Binary Brains",
+                captain: "Prashant Kumar",
+                videoLink: "https://drive.google.com/file/d/1w20AOCt6cMaGFBClpDZBQorJoccIVgoo/view?usp=drive_link",
+                slidedeckLink: "https://docs.google.com/presentation/d/16uQWxmamlAtWO6QKrklr_qw_8EUonNGb0XFcyUiw-hc/edit?slide=id.p1&pli=1#slide=id.p1",
+                problemSolution: "test",
+                architectureLink: "https://your-architecture-diagram-link.com", // Placeholder
+                impactMetrics: "92% diagnostic accuracy, 50% reduction in misdiagnosis rates, potential to save thousands of lives and millions in healthcare costs.",
+                bestCollaboration: "Binary Brains adopted a highly collaborative approach, utilizing daily sync-ups and a shared task board to maintain momentum. We fostered an environment where ideas were freely exchanged and constructive feedback was actively sought, leading to a highly refined and robust solution.",
+                bestAI: "The diagnostic system developed by Binary Brains leverages advanced deep learning algorithms trained on vast medical image datasets, achieving an impressive 92% diagnostic accuracy. This AI's ability to identify subtle patterns often missed by human eyes represents a significant leap forward in early disease detection and personalized medicine."
+            },
+            {
+                name: "PromptOps",
+                captain: "Rahul Suthar",
+                videoLink: "https://drive.google.com/file/d/1oxGp_1fHSpmxDLa41md4ZwBVA1-gpmBt/view?usp=drive_link",
+                slidedeckLink: "https://docs.google.com/presentation/d/1eu8Xzc-BUd1VFj5mOVlEIz4Al_vGSwkg5UCaP7oncdE/edit?usp=drive_link",
+                problemSolution: "The Problem On large infrastructure projects, time-critical hazards often go undetected until they cause costly delays — like trench flooding from overnight rainfall. Field engineers log reports, but without real-time interpretation or alerting, response is slow. At the same time, project managers lack a consistent, system-wide view of emerging risks. Daily briefs are often assembled manually, inconsistently, or not at all — reducing confidence, situational awareness, and coordination.How We Identified the GapBy reviewing incident logs and day-start routines across roles, we saw two repeated friction points: Hazards were being recorded — but not escalated.Briefings were being written — but not informed by live system context.We saw an opportunity to address both with targeted, intelligent automation that leveraged existing field data.The Solution :We designed two connected capabilities powered by Salesforce Agentforce:🛰️ GeoSentinel_Agent (agentic):Triggered by new case entries, this Agentforce agent detects hazard types based on field data, checks GIS overlays or weather forecasts via Apex, and raises alerts. If risk is confirmed, it generates a Gemini-based impact summary, creates a follow-up task, and pings the project manager via Slack.🧠 Briefing Intelligence (non-agentic, Gemini-based):Built using Prompt Builder, this intelligence scans across agent activity logs, tasks, and unresolved case data to produce a clean daily summary. It contextualises site risks, flags stale follow-ups, and delivers briefing content ready for PM dashboards or mobile delivery.Together, they close the loop between risk detection and risk communication — helping teams act faster and align earlier, without additional manual effort.",
+                architectureLink: "https://lucid.app/lucidchart/e240127c-2be7-4a64-92fe-a4a31e24cb40/edit?beaconFlowId=C03C1998FE2CD8E6&invitationId=inv_cc3917b4-6a86-4d5e-baf6-47c3c49689a1&page=5Mro32Jj5pXS#",
+                impactMetrics: "Each project saves up to 180 hours annually by automating hazard detection and briefing compilation — reducing manual prep time from nearly an hour per day to just minutes.With real-time alerts from our geospatial intelligence workflows, we've seen a 60% drop in site incidents due to faster identification and escalation of risks.",
+                bestCollaboration: "PromptOps exemplified seamless integration of diverse skill sets, from front-end development to complex AI prompt engineering. Our daily huddles and use of a shared documentation portal ensured everyone was on the same page, leading to efficient task handoffs and a highly synchronized development cycle.",
+                bestAI: "PromptOps' solution showcases a sophisticated application of AI through its GeoSentinel_Agent, which proactively detects hazards using field data and GIS overlays, and its Gemini-based Briefing Intelligence, which generates real-time, contextualized risk summaries. This dual AI approach significantly enhances situational awareness and accelerates response times on large infrastructure projects."
+            },
+            {
+                name: "The Agentic Troup",
+                captain: "Sonali Bhat",
+                videoLink: "https://drive.google.com/file/d/1Mf6Pu11v6yZTkFEYqiN7PpERgcrB9XSh/view?usp=drive_link",
+                slidedeckLink: "https://docs.google.com/presentation/d/1U7AGJdLSMHliISx0SCLID7r1x2LEmnIISzHcGAhD40o/edit?slide=id.p1#slide=id.p1",
+                problemSolution: "Test",
+                architectureLink: "https://lucid.app/lucidchart/c9ed1c4c-0ea3-46cb-bf05-f08f791f8158/edit?invitationId=inv_34456e44-2bb3-45ce-9483-933ef022cc9b",
+                impactMetrics: "Student Experience Metrics:960x faster response time (3 minutes vs. 2 days).60% reduction in advisor queue backlog.24/7 availability vs. current office hours.",
+                bestCollaboration: "The Agentic Troup demonstrated outstanding team cohesion, breaking down complex problems into manageable sub-tasks and distributing them effectively. Regular code reviews and pair-programming sessions fostered a strong sense of shared ownership and ensured high-quality deliverables across all components.",
+                bestAI: "Our solution leverages a powerful AI-driven agent framework that enables highly autonomous and proactive task execution. The AI's ability to interpret complex requests, interact with multiple systems, and learn from past interactions provides a truly intelligent and efficient automated experience, exemplified by the dramatic improvement in response times for student queries."
+            }
+        ];
 
-      // Team data structure - Contains all information for each team
-      const teams = [
-        {
-          name: "AgentX",
-          captain: "Laura Bosi",
-          videoLink:
-            "https://drive.google.com/file/d/1N12k1yjf8FnQh4ahslgWq_ycBkn4v-ZS/view?usp=drive_link",
-          slidedeckLink:
-            "https://docs.google.com/presentation/d/1z0nHk_EyRsVaFXYa37iinxEZnWhWdymuKRHgh9U8wt0/edit?usp=sharing", // Placeholder, will show fallback
-          problemSolution: 
-            <h1>
-              "Our aim for the solution was to deliver an integrated AI Agent
-              that can be triggered at any time during a guests stay and by
-              hotel staff and guests themselves. The AI Agent would assist front
-              desk staff perform guest checkin, suggest room upgrades, suggest
-              experiences based on guest preferences, ready their room by
-              communicating special requests well in advance and improve the
-              guest experience overall. Unfortunately for us time constraints
-              prevented us from achieving our ultimate goal; however, given some
-              additional time we believe we would have been able to deliver a
-              complete solution with fully functioning AI Agent including prompt
-              templates, topics and Gemini integration."
-            </h1>
-          ),
-          architectureLink:
-            "https://lucid.app/lucidchart/1da7218c-1f1c-44a7-b984-74fd76c46e91/edit?viewport_loc=-1377%2C-975%2C2217%2C1107%2C0_0&invitationId=inv_d0a84753-8229-4221-ae82-a11a26b069f3", // Placeholder
-          impactMetrics: (
-            <h1>
-              "Personalised Service - Better insight on upcoming and existing
-              Guests and their preferences Staff Guidance - Empowering staff
-              with knowledge at their fingertips allowing for quicker decisions
-              and seamless service Increased Operational Efficiency - Reduction
-              in Guest Complaints regarding missed service requests. Improved
-              communication and coordination between departments"
-            </h1>
-          ,
-          bestCollaboration: 
-            <h1>
-              "We touched base on a daily basis with a quick slack message from
-              the captain to check progress, or an update overnight from the
-              team members on what was progressed. The ability to speak openly
-              and communicate issues, there was a level of trust between us all
-              where we knew we would do our best to make our team proud. Some
-              other little chestnuts as to why AgentX should win best team
-              collaboration is because we never gave up, we supported each
-              other, smiled, laughed, cried...with laughter and just had fun."
-            </h1>
-          ,
-          bestAI: 
-            <h1>
-              Unfortunately we did not get the chance to use in it's full
-              capacity but if we did, we would have used grounding to
-              personalize the content and further enhance the experience of our
-              guests, prompt strategy to help deal with guest communication from
-              feedback to personalised arrival and during stay information.
-            </h1>
-          ,
-        },
-        {
-          name: "The AIvengers",
-          captain: "Mehul Shah",
-          videoLink:
-            "https://drive.google.com/file/d/1hbfrXdQVdQsMJzSeTi8NNQCpQ0VRQY5f/view?usp=sharing",
-          slidedeckLink:
-            "https://docs.google.com/presentation/d/1gPnUZSezgzzuin8F-3--0LBAN_jzkjzw5TcFukpawic/edit?usp=sharing",
-          problemSolution:
-            "We tackled the issue of data silos in enterprise environments by creating an intelligent data integration platform that uses ML to automatically map and synchronize data across different systems.",
-          architectureLink:
-            "https://drive.google.com/file/d/1lHWkAIwiME3SB1MRhT5IkSWNVNN_x2Ps/view?usp=drive_link",
-          impactMetrics:
-            "Ask from anywhere - users can fetch information from Slack , Personalized & relevant information retrieval, Faster answers",
-          bestCollaboration:
-            "The AIvengers demonstrated exceptional cross-functional collaboration, with team members from diverse backgrounds (data science, UX design, backend engineering) working in sync. We established clear communication protocols and used a shared knowledge base, which allowed us to quickly adapt to challenges and integrate complex components efficiently.",
-          bestAI:
-            "Our data integration platform utilizes a self-learning ML model that continuously optimizes data mapping and synchronization rules based on usage patterns and feedback. This intelligent automation not only reduces manual effort but also improves data quality and consistency across disparate enterprise systems over time.",
-        },
-        {
-          name: "Ctrl+Alt+Elite",
-          captain: "Team Captain Name",
-          videoLink:
-            "https://drive.google.com/file/d/1pm24zoCM4Xl7Kl0VKPTLv3jpgqwEAna0/view?usp=sharing",
-          slidedeckLink:
-            "https://docs.google.com/presentation/d/1gPnUZSezgzzuin8F-3--0LBAN_jzkjzw5TcFukpawic/edit?slide=id.p1#slide=id.p1",
-          problemSolution: "Test",
-          architectureLink: "https://your-architecture-diagram-link.com", // Placeholder
-          impactMetrics: "N/A", // Add a placeholder or actual metric
-          bestCollaboration: "N/A",
-          bestAI: "N/A",
-        },
-        {
-          name: "InsightHackers",
-          captain: "Team Captain Name",
-          videoLink:
-            "https://drive.google.com/file/d/1NOYnCLSNkhsRpGJLZdu9lAAu2tkTXTqS/view?usp=drive_link",
-          slidedeckLink: "https://docs.google.com/presentation/your-slides", // Placeholder
-          problemSolution:
-            "We developed an advanced analytics platform that transforms raw business data into actionable insights using natural language processing and predictive modeling.",
-          architectureLink: "https://your-architecture-diagram-link.com", // Placeholder
-          impactMetrics:
-            "35% improvement in decision-making speed, 28% increase in revenue prediction accuracy, and 200% ROI within 18 months.",
-          bestCollaboration:
-            "The InsightHackers embraced a highly iterative and feedback-driven approach. We conducted daily pair-programming sessions and frequent internal demos, ensuring that everyone was aligned and contributing to the core vision. Our use of a shared development environment and clear version control practices minimized conflicts and maximized collective output.",
-          bestAI:
-            "Our analytics platform features a sophisticated NLP engine that can derive nuanced insights from unstructured text data, combined with a predictive modeling component that forecasts future trends with high accuracy. The AI's ability to learn from diverse datasets and adapt its predictions makes it a powerful tool for strategic business intelligence.",
-        },
-        {
-          name: "AI Wizards",
-          captain: "Team Captain Name",
-          videoLink:
-            "https://drive.google.com/file/d/16skjlQgdoR_jNfVvWDxAiIAQKAfvDiuB/view?usp=drive_link",
-          slidedeckLink: "https://docs.google.com/presentation/your-slides", // Placeholder
-          problemSolution:
-            "Our team created an intelligent code review system that uses machine learning to automatically detect bugs, security vulnerabilities, and suggest optimizations in real-time.",
-          architectureLink: "https://your-architecture-diagram-link.com", // Placeholder
-          impactMetrics:
-            "70% reduction in code review time, 45% decrease in production bugs, estimated $500K annual savings in development costs.",
-          bestCollaboration:
-            "AI Wizards fostered a culture of continuous learning and mutual support. We organized regular knowledge-sharing sessions and peer reviews, which not only improved code quality but also upskilled every team member. Our collective dedication to open-source contributions also strengthened our team bond.",
-          bestAI:
-            "The intelligent code review system leverages a custom-trained machine learning model on a vast dataset of secure and insecure code patterns. Its real-time suggestions and proactive bug detection capabilities, including zero-day vulnerability identification, demonstrate a cutting-edge application of AI in software development, significantly improving code integrity and security posture.",
-        },
-        {
-          name: "LLMao Squad",
-          captain: "Team Captain Name",
-          videoLink:
-            "https://drive.google.com/file/d/1wgHDbN6Si4V_EH9zd_CxGRPB-dlYrVSz/view?usp=drive_link",
-          slidedeckLink: "https://docs.google.com/presentation/your-slides", // Placeholder
-          problemSolution:
-            "We built a personalized learning assistant that adapts to individual learning styles and provides customized educational content using large language models and cognitive science principles.",
-          architectureLink: "https://your-architecture-diagram-link.com", // Placeholder
-          impactMetrics:
-            "60% improvement in learning retention, 40% reduction in study time, potential to impact 10M+ students globally.",
-          bestCollaboration:
-            "LLMao Squad excelled in distributed collaboration, with team members across different time zones. We established a 'follow-the-sun' development model, passing work seamlessly and ensuring constant progress. Regular virtual brainstorming sessions and a strong emphasis on async communication kept everyone connected and productive.",
-          bestAI:
-            "Our personalized learning assistant is powered by a fine-tuned Large Language Model (LLM) that not only generates adaptive educational content but also analyzes user engagement and performance data to dynamically adjust learning paths. This innovative application of LLMs creates a truly individualized learning experience, enhancing comprehension and retention at scale.",
-        },
-        {
-          name: "Cloudwerx Agents",
-          captain: "Team Captain Name",
-          videoLink:
-            "https://drive.google.com/file/d/10hqaTL0roeQ_qWfW4betcyamgDXAFMH-/view?usp=drive_link",
-          slidedeckLink: "https://docs.google.com/presentation/your-slides", // Placeholder
-          problemSolution:
-            "Our solution optimizes cloud infrastructure costs by implementing intelligent resource management that automatically scales and allocates resources based on predictive usage patterns.",
-          architectureLink: "https://your-architecture-diagram-link.com", // Placeholder
-          impactMetrics:
-            "30-50% reduction in cloud costs, 99.9% uptime guarantee, projected savings of $1M+ annually for enterprise clients.",
-          bestCollaboration:
-            "Cloudwerx Agents fostered an environment of radical transparency and shared responsibility. We used real-time project management tools to track progress and identify blockers, and actively sought diverse perspectives in all decision-making processes. Our joint commitment to quality assurance ensured a robust and reliable solution.",
-          bestAI:
-            "The core of our cloud cost optimization solution is an AI-driven predictive analytics engine that forecasts resource demands with unprecedented accuracy. By leveraging historical data and real-time metrics, the AI dynamically adjusts resource allocation, minimizing idle capacity and maximizing cost efficiency, representing a significant advancement in cloud financial operations.",
-        },
-        {
-          name: "Rising Cyber Brains (RCB)",
-          captain: "Team Captain Name",
-          videoLink:
-            "https://drive.google.com/file/d/1ZxXEJCBtKALvEVCx2nDp7p5jJbY7MooV/view?usp=drive_link",
-          slidedeckLink: "https://docs.google.com/presentation/your-slides", // Placeholder
-          problemSolution:
-            "We developed a comprehensive cybersecurity training platform that uses gamification and AI to create personalized security awareness programs for organizations.",
-          architectureLink: "https://your-architecture-diagram-link.com", // Placeholder
-          impactMetrics:
-            "85% improvement in security awareness scores, 60% reduction in human-error security incidents, ROI of 400% through prevented breaches.",
-          bestCollaboration:
-            "RCB demonstrated exceptional synergy, with each member contributing their unique expertise in cybersecurity and gamification. We held immersive workshops to align on design principles and regularly cross-trained each other on different modules, creating a highly adaptable and resilient team.",
-          bestAI:
-            "Our cybersecurity training platform integrates an AI engine that analyzes user behavior and performance to create highly personalized gamified learning paths. This adaptive AI identifies individual weaknesses and targets training effectively, leading to significant improvements in security awareness and a measurable reduction in human-error vulnerabilities across organizations.",
-        },
-        {
-          name: "Binary Brains",
-          captain: "Prashant Kumar",
-          videoLink:
-            "https://drive.google.com/file/d/1w20AOCt6cMaGFBClpDZBQorJoccIVgoo/view?usp=drive_link",
-          slidedeckLink:
-            "https://docs.google.com/presentation/d/16uQWxmamlAtWO6QKrklr_qw_8EUonNGb0XFcyUiw-hc/edit?slide=id.p1&pli=1#slide=id.p1",
-          problemSolution: "test",
-          architectureLink: "https://your-architecture-diagram-link.com", // Placeholder
-          impactMetrics:
-            "92% diagnostic accuracy, 50% reduction in misdiagnosis rates, potential to save thousands of lives and millions in healthcare costs.",
-          bestCollaboration:
-            "Binary Brains adopted a highly collaborative approach, utilizing daily sync-ups and a shared task board to maintain momentum. We fostered an environment where ideas were freely exchanged and constructive feedback was actively sought, leading to a highly refined and robust solution.",
-          bestAI:
-            "The diagnostic system developed by Binary Brains leverages advanced deep learning algorithms trained on vast medical image datasets, achieving an impressive 92% diagnostic accuracy. This AI's ability to identify subtle patterns often missed by human eyes represents a significant leap forward in early disease detection and personalized medicine.",
-        },
-        {
-          name: "PromptOps",
-          captain: "Rahul Suthar",
-          videoLink:
-            "https://drive.google.com/file/d/1oxGp_1fHSpmxDLa41md4ZwBVA1-gpmBt/view?usp=drive_link",
-          slidedeckLink:
-            "https://docs.google.com/presentation/d/1eu8Xzc-BUd1VFj5mOVlEIz4Al_vGSwkg5UCaP7oncdE/edit?usp=drive_link",
-          problemSolution:
-            "The Problem On large infrastructure projects, time-critical hazards often go undetected until they cause costly delays — like trench flooding from overnight rainfall. Field engineers log reports, but without real-time interpretation or alerting, response is slow. At the same time, project managers lack a consistent, system-wide view of emerging risks. Daily briefs are often assembled manually, inconsistently, or not at all — reducing confidence, situational awareness, and coordination.How We Identified the GapBy reviewing incident logs and day-start routines across roles, we saw two repeated friction points: Hazards were being recorded — but not escalated.Briefings were being written — but not informed by live system context.We saw an opportunity to address both with targeted, intelligent automation that leveraged existing field data.The Solution :We designed two connected capabilities powered by Salesforce Agentforce:🛰️ GeoSentinel_Agent (agentic):Triggered by new case entries, this Agentforce agent detects hazard types based on field data, checks GIS overlays or weather forecasts via Apex, and raises alerts. If risk is confirmed, it generates a Gemini-based impact summary, creates a follow-up task, and pings the project manager via Slack.🧠 Briefing Intelligence (non-agentic, Gemini-based):Built using Prompt Builder, this intelligence scans across agent activity logs, tasks, and unresolved case data to produce a clean daily summary. It contextualises site risks, flags stale follow-ups, and delivers briefing content ready for PM dashboards or mobile delivery.Together, they close the loop between risk detection and risk communication — helping teams act faster and align earlier, without additional manual effort.",
-          architectureLink:
-            "https://lucid.app/lucidchart/e240127c-2be7-4a64-92fe-a4a31e24cb40/edit?beaconFlowId=C03C1998FE2CD8E6&invitationId=inv_cc3917b4-6a86-4d5e-baf6-47c3c49689a1&page=5Mro32Jj5pXS#",
-          impactMetrics:
-            "Each project saves up to 180 hours annually by automating hazard detection and briefing compilation — reducing manual prep time from nearly an hour per day to just minutes.With real-time alerts from our geospatial intelligence workflows, we've seen a 60% drop in site incidents due to faster identification and escalation of risks.",
-          bestCollaboration:
-            "PromptOps exemplified seamless integration of diverse skill sets, from front-end development to complex AI prompt engineering. Our daily huddles and use of a shared documentation portal ensured everyone was on the same page, leading to efficient task handoffs and a highly synchronized development cycle.",
-          bestAI:
-            "PromptOps' solution showcases a sophisticated application of AI through its GeoSentinel_Agent, which proactively detects hazards using field data and GIS overlays, and its Gemini-based Briefing Intelligence, which generates real-time, contextualized risk summaries. This dual AI approach significantly enhances situational awareness and accelerates response times on large infrastructure projects.",
-        },
-        {
-          name: "The Agentic Troup",
-          captain: "Sonali Bhat",
-          videoLink:
-            "https://drive.google.com/file/d/1Mf6Pu11v6yZTkFEYqiN7PpERgcrB9XSh/view?usp=drive_link",
-          slidedeckLink:
-            "https://docs.google.com/presentation/d/1U7AGJdLSMHliISx0SCLID7r1x2LEmnIISzHcGAhD40o/edit?slide=id.p1#slide=id.p1",
-          problemSolution: "Test",
-          architectureLink:
-            "https://lucid.app/lucidchart/c9ed1c4c-0ea3-46cb-bf05-f08f791f8158/edit?invitationId=inv_34456e44-2bb3-45ce-9483-933ef022cc9b",
-          impactMetrics:
-            "Student Experience Metrics:960x faster response time (3 minutes vs. 2 days).60% reduction in advisor queue backlog.24/7 availability vs. current office hours.",
-          bestCollaboration:
-            "The Agentic Troup demonstrated outstanding team cohesion, breaking down complex problems into manageable sub-tasks and distributing them effectively. Regular code reviews and pair-programming sessions fostered a strong sense of shared ownership and ensured high-quality deliverables across all components.",
-          bestAI:
-            "Our solution leverages a powerful AI-driven agent framework that enables highly autonomous and proactive task execution. The AI's ability to interpret complex requests, interact with multiple systems, and learn from past interactions provides a truly intelligent and efficient automated experience, exemplified by the dramatic improvement in response times for student queries.",
-        },
-      ];
+        // Function to generate team cards and content dynamically
+        function generateTeamElements() {
+            const teamsContainer = document.getElementById('teamsContainer');
+            const teamContents = document.getElementById('teamContents');
+            
+            teamsContainer.innerHTML = ''; // Clear existing team cards
+            teamContents.innerHTML = ''; // Clear existing team content
 
-      // Function to generate team cards and content dynamically
-      function generateTeamElements() {
-        const teamsContainer = document.getElementById("teamsContainer");
-        const teamContents = document.getElementById("teamContents");
-
-        teamsContainer.innerHTML = ""; // Clear existing team cards
-        teamContents.innerHTML = ""; // Clear existing team content
-
-        teams.forEach((team, index) => {
-          // Create and append team card to the sidebar
-          const teamCard = document.createElement("div");
-          teamCard.className = "team-card";
-          teamCard.setAttribute("data-team", index);
-          teamCard.innerHTML = `
+            teams.forEach((team, index) => {
+                // Create and append team card to the sidebar
+                const teamCard = document.createElement('div');
+                teamCard.className = 'team-card';
+                teamCard.setAttribute('data-team', index);
+                teamCard.innerHTML = `
                     <div class="team-name">${team.name}</div>
                     <div class="team-captain">Captain: ${team.captain}</div>
                 `;
-          teamCard.addEventListener("click", () => selectTeam(index)); // Add click listener
-          teamsContainer.appendChild(teamCard);
+                teamCard.addEventListener('click', () => selectTeam(index)); // Add click listener
+                teamsContainer.appendChild(teamCard);
 
-          // Create and append team content div (initially hidden)
-          const teamContent = document.createElement("div");
-          teamContent.className = "team-content";
-          teamContent.setAttribute("data-team", index);
-
-          const videoEmbedUrl = convertGoogleDriveVideoLink(team.videoLink);
-
-          teamContent.innerHTML = `
+                // Create and append team content div (initially hidden)
+                const teamContent = document.createElement('div');
+                teamContent.className = 'team-content';
+                teamContent.setAttribute('data-team', index);
+                
+                const videoEmbedUrl = convertGoogleDriveVideoLink(team.videoLink);
+                
+                teamContent.innerHTML = `
                     <div class="content-header">
                         <div class="content-team-name">${team.name}</div>
                         <div class="content-captain">Team Captain: ${team.captain}</div>
@@ -978,60 +846,56 @@
                         <div class="info-content">${team.impactMetrics}</div>
                     </div>
                 `;
-
-          teamContents.appendChild(teamContent);
-        });
-      }
-
-      // Function to handle team selection and display relevant content
-      function selectTeam(teamIndex) {
-        // Remove 'active' class from all team cards
-        document.querySelectorAll(".team-card").forEach((card) => {
-          card.classList.remove("active");
-        });
-
-        // Add 'active' class to the selected team card
-        const selectedCard = document.querySelector(
-          `[data-team="${teamIndex}"]`
-        );
-        if (selectedCard) {
-          selectedCard.classList.add("active");
+                
+                teamContents.appendChild(teamContent);
+            });
         }
 
-        // Hide the initial content placeholder
-        document.getElementById("contentPlaceholder").style.display = "none";
-
-        // Hide all team content sections
-        document.querySelectorAll(".team-content").forEach((content) => {
-          content.classList.remove("active");
-        });
-
-        // Show the content for the selected team
-        const selectedContent = document.querySelector(
-          `.team-content[data-team="${teamIndex}"]`
-        );
-        if (selectedContent) {
-          selectedContent.classList.add("active");
-
-          // Handle iframe loading issues with fallback for video only
-          setTimeout(() => {
-            const videoIframe = selectedContent.querySelector(".video-embed");
-            const videoFallback = videoIframe?.nextElementSibling; // Get the next sibling (fallback div)
-            if (videoIframe && videoIframe.style.display === "none") {
-              if (videoFallback) {
-                videoFallback.style.display = "flex";
-              }
-            } else if (videoIframe && videoFallback) {
-              videoFallback.style.display = "none";
+        // Function to handle team selection and display relevant content
+        function selectTeam(teamIndex) {
+            // Remove 'active' class from all team cards
+            document.querySelectorAll('.team-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            
+            // Add 'active' class to the selected team card
+            const selectedCard = document.querySelector(`[data-team="${teamIndex}"]`);
+            if (selectedCard) {
+                selectedCard.classList.add('active');
             }
-          }, 500); // Small delay to allow iframes to attempt loading
-        }
-      }
+            
+            // Hide the initial content placeholder
+            document.getElementById('contentPlaceholder').style.display = 'none';
+            
+            // Hide all team content sections
+            document.querySelectorAll('.team-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Show the content for the selected team
+            const selectedContent = document.querySelector(`.team-content[data-team="${teamIndex}"]`);
+            if (selectedContent) {
+                selectedContent.classList.add('active');
 
-      // Initialize the application when the DOM is fully loaded
-      document.addEventListener("DOMContentLoaded", function () {
-        generateTeamElements();
-      });
+                // Handle iframe loading issues with fallback for video only
+                setTimeout(() => {
+                    const videoIframe = selectedContent.querySelector('.video-embed');
+                    const videoFallback = videoIframe?.nextElementSibling; // Get the next sibling (fallback div)
+                    if (videoIframe && videoIframe.style.display === 'none') {
+                        if (videoFallback) {
+                            videoFallback.style.display = 'flex';
+                        }
+                    } else if (videoIframe && videoFallback) {
+                        videoFallback.style.display = 'none';
+                    }
+                }, 500); // Small delay to allow iframes to attempt loading
+            }
+        }
+
+        // Initialize the application when the DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            generateTeamElements();
+        });
     </script>
-  </body>
+</body>
 </html>
