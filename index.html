@@ -13,150 +13,177 @@
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #2563eb 100%);
             min-height: 100vh;
             color: #333;
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 1600px;
             margin: 0 auto;
             padding: 2rem;
         }
 
         .header {
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
             color: white;
         }
 
+        .header .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            gap: 1rem;
+        }
+
+        .header .logo {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6px;
+        }
+
+        .header .logo svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .header .brand-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            letter-spacing: 1px;
+        }
+
         .header h1 {
-            font-size: 3rem;
+            font-size: 2.5rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
             text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
         .header p {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             opacity: 0.9;
         }
 
-        .teams-grid {
+        .main-content {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: 400px 1fr;
             gap: 2rem;
-            margin-bottom: 2rem;
+            height: calc(100vh - 200px);
+            min-height: 600px;
+        }
+
+        .teams-sidebar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+            height: 100%;
+        }
+
+        .sidebar-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #1e3a8a;
+            margin-bottom: 1rem;
+            text-align: center;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e2e8f0;
         }
 
         .team-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .team-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            border-color: #e2e8f0;
+        }
+
+        .team-card.active {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #2563eb 100%);
+            color: white;
+            transform: translateX(5px);
+            box-shadow: 0 6px 20px rgba(30, 58, 138, 0.3);
+        }
+
+        .team-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .team-captain {
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+
+        .team-card.active .team-captain {
+            opacity: 0.9;
+        }
+
+        .content-area {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             border-radius: 20px;
             padding: 2rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.2);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-        }
-
-        .team-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
-            background: rgba(255, 255, 255, 1);
-        }
-
-        .team-name {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #4a5568;
-            margin-bottom: 0.5rem;
-        }
-
-        .team-captain {
-            color: #718096;
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-        }
-
-        .view-details {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 10px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            width: 100%;
-        }
-
-        .view-details:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(5px);
-        }
-
-        .modal-content {
-            background: white;
-            margin: 2% auto;
-            padding: 2rem;
-            border-radius: 20px;
-            width: 90%;
-            max-width: 900px;
-            max-height: 85vh;
             overflow-y: auto;
-            position: relative;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            height: 100%;
         }
 
-        .close {
-            position: absolute;
-            right: 1.5rem;
-            top: 1.5rem;
-            font-size: 2rem;
-            font-weight: bold;
-            cursor: pointer;
-            color: #718096;
-            width: 40px;
-            height: 40px;
+        .content-placeholder {
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 50%;
-            transition: all 0.3s ease;
+            height: 100%;
+            color: #64748b;
+            font-size: 1.2rem;
+            text-align: center;
         }
 
-        .close:hover {
-            background: #f7fafc;
-            color: #2d3748;
+        .team-content {
+            display: none;
+            height: 100%;
         }
 
-        .modal-header {
+        .team-content.active {
+            display: block;
+        }
+
+        .content-header {
             margin-bottom: 2rem;
-            padding-right: 3rem;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 1rem;
         }
 
-        .modal-team-name {
+        .content-team-name {
             font-size: 2rem;
             font-weight: 700;
-            color: #2d3748;
+            color: #1e3a8a;
             margin-bottom: 0.5rem;
         }
 
-        .modal-captain {
-            color: #718096;
+        .content-captain {
+            color: #64748b;
             font-size: 1.1rem;
         }
 
@@ -175,51 +202,39 @@
             border-radius: 15px;
         }
 
-        .video-placeholder {
-            width: 100%;
-            height: 300px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.2rem;
-            text-align: center;
-            border-radius: 15px;
-        }
-
         .team-info {
             display: grid;
             gap: 1.5rem;
         }
 
         .info-section {
-            background: #f7fafc;
+            background: #f8fafc;
             padding: 1.5rem;
             border-radius: 15px;
-            border-left: 4px solid #667eea;
+            border-left: 4px solid #1e3a8a;
         }
 
         .info-title {
             font-weight: 600;
-            color: #2d3748;
+            color: #1e3a8a;
             margin-bottom: 0.5rem;
             font-size: 1.1rem;
         }
 
         .info-content {
-            color: #4a5568;
+            color: #475569;
             line-height: 1.6;
         }
 
         .info-link {
-            color: #667eea;
+            color: #1e3a8a;
             text-decoration: none;
             font-weight: 500;
         }
 
         .info-link:hover {
             text-decoration: underline;
+            color: #2563eb;
         }
 
         .video-buttons {
@@ -247,7 +262,13 @@
             transform: translateY(-2px);
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 1200px) {
+            .main-content {
+                grid-template-columns: 350px 1fr;
+            }
+        }
+
+        @media (max-width: 968px) {
             .container {
                 padding: 1rem;
             }
@@ -255,24 +276,51 @@
             .header h1 {
                 font-size: 2rem;
             }
+
+            .header .logo-container {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .header .brand-text {
+                font-size: 1.3rem;
+            }
             
-            .teams-grid {
+            .main-content {
                 grid-template-columns: 1fr;
-                gap: 1rem;
+                height: auto;
             }
-            
-            .team-card {
-                padding: 1.5rem;
+
+            .teams-sidebar {
+                height: auto;
+                max-height: 300px;
             }
-            
-            .modal-content {
-                width: 95%;
-                margin: 5% auto;
-                padding: 1.5rem;
+
+            .content-area {
+                height: 600px;
             }
 
             .video-buttons {
                 flex-direction: column;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                gap: 1rem;
+            }
+
+            .teams-sidebar,
+            .content-area {
+                padding: 1.5rem;
+            }
+
+            .content-team-name {
+                font-size: 1.5rem;
+            }
+
+            .video-container {
+                height: 250px;
             }
         }
     </style>
@@ -280,30 +328,44 @@
 <body>
     <div class="container">
         <div class="header">
+            <div class="logo-container">
+                <div class="logo">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Cloudwerx Wing Logo -->
+                        <path d="M20,70 Q30,20 50,30 Q70,40 80,20 Q85,25 80,35 Q70,50 50,40 Q30,30 20,70Z" fill="#1e3a8a"/>
+                        <path d="M15,75 Q25,25 45,35 Q65,45 75,25 Q80,30 75,40 Q65,55 45,45 Q25,35 15,75Z" fill="#2563eb"/>
+                        <path d="M10,80 Q20,30 40,40 Q60,50 70,30 Q75,35 70,45 Q60,60 40,50 Q20,40 10,80Z" fill="#3b82f6"/>
+                        <!-- Cloud element -->
+                        <circle cx="25" cy="25" r="8" fill="#1e3a8a" opacity="0.7"/>
+                        <circle cx="35" cy="20" r="6" fill="#2563eb" opacity="0.7"/>
+                        <circle cx="45" cy="25" r="7" fill="#3b82f6" opacity="0.7"/>
+                    </svg>
+                </div>
+                <div class="brand-text">CLOUDWERX</div>
+            </div>
             <h1>Hackathon 2025</h1>
             <p>Team Showcase - 11 Amazing Projects</p>
         </div>
 
-        <div class="teams-grid" id="teamsGrid">
-            <!-- Team cards will be generated by JavaScript -->
-        </div>
-    </div>
+        <div class="main-content">
+            <div class="teams-sidebar">
+                <div class="sidebar-title">Teams</div>
+                <div id="teamsContainer">
+                    <!-- Team cards will be generated by JavaScript -->
+                </div>
+            </div>
 
-    <!-- Modal -->
-    <div id="teamModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <div class="modal-header">
-                <div class="modal-team-name" id="modalTeamName"></div>
-                <div class="modal-captain" id="modalCaptain"></div>
-            </div>
-            
-            <div class="video-container" id="videoContainer">
-                <!-- Video will be populated by JavaScript -->
-            </div>
-            
-            <div class="team-info" id="teamInfo">
-                <!-- Team information will be populated by JavaScript -->
+            <div class="content-area">
+                <div class="content-placeholder" id="contentPlaceholder">
+                    <div>
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">👈</div>
+                        <div>Select a team from the sidebar to view their project details</div>
+                    </div>
+                </div>
+                
+                <div id="teamContents">
+                    <!-- Team content will be generated by JavaScript -->
+                </div>
             </div>
         </div>
     </div>
@@ -342,12 +404,12 @@
             },
             {
                 name: "The AIvengers",
-                captain: "Mehul Shah", // Replace with actual captain name
-                videoLink: "https://drive.google.com/file/d/1hbfrXdQVdQsMJzSeTi8NNQCpQ0VRQY5f/view?usp=sharing", // Replace with your video link
+                captain: "Mehul Shah",
+                videoLink: "https://drive.google.com/file/d/1hbfrXdQVdQsMJzSeTi8NNQCpQ0VRQY5f/view?usp=sharing",
                 slidedeckLink: "https://docs.google.com/presentation/d/1gPnUZSezgzzuin8F-3--0LBAN_jzkjzw5TcFukpawic/edit?usp=sharing",
-                problemSolution: "We tackled the issue of data silos in enterprise environments by creating an intelligent data integration platform that uses ML to automatically map and synchronize data across different systems.", // Update with your actual problem/solution
-                architectureLink: "https://drive.google.com/file/d/1lHWkAIwiME3SB1MRhT5IkSWNVNN_x2Ps/view?usp=drive_link", // Replace with your architecture diagram
-                impactMetrics: "Ask from anywhere - users can fetch information from Slack , Personalized & relevant information retrieval, Faster answers" // Update with your actual metrics
+                problemSolution: "We tackled the issue of data silos in enterprise environments by creating an intelligent data integration platform that uses ML to automatically map and synchronize data across different systems.",
+                architectureLink: "https://drive.google.com/file/d/1lHWkAIwiME3SB1MRhT5IkSWNVNN_x2Ps/view?usp=drive_link",
+                impactMetrics: "Ask from anywhere - users can fetch information from Slack , Personalized & relevant information retrieval, Faster answers"
             },
             {
                 name: "Ctrl+Alt+Elite",
@@ -430,69 +492,122 @@
             }
         ];
 
-        // Generate team cards
-        function generateTeamCards() {
-            const teamsGrid = document.getElementById('teamsGrid');
-            teamsGrid.innerHTML = '';
+        // Generate team cards and content
+        function generateTeamElements() {
+            const teamsContainer = document.getElementById('teamsContainer');
+            const teamContents = document.getElementById('teamContents');
+            
+            teamsContainer.innerHTML = '';
+            teamContents.innerHTML = '';
 
             teams.forEach((team, index) => {
+                // Generate team card
                 const teamCard = document.createElement('div');
                 teamCard.className = 'team-card';
+                teamCard.setAttribute('data-team', index);
                 teamCard.innerHTML = `
                     <div class="team-name">${team.name}</div>
                     <div class="team-captain">Captain: ${team.captain}</div>
-                    <button class="view-details" onclick="openModal(${index})">
-                        View Project Details
-                    </button>
                 `;
-                teamsGrid.appendChild(teamCard);
+                teamCard.addEventListener('click', () => selectTeam(index));
+                teamsContainer.appendChild(teamCard);
+
+                // Generate team content
+                const teamContent = document.createElement('div');
+                teamContent.className = 'team-content';
+                teamContent.setAttribute('data-team', index);
+                
+                const embedUrl = convertGoogleDriveLink(team.videoLink);
+                
+                teamContent.innerHTML = `
+                    <div class="content-header">
+                        <div class="content-team-name">${team.name}</div>
+                        <div class="content-captain">Team Captain: ${team.captain}</div>
+                    </div>
+                    
+                    <div class="video-container">
+                        <div style="position: relative; width: 100%; height: 400px; border-radius: 15px; overflow: hidden; background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #2563eb 100%); display: flex; align-items: center; justify-content: center; color: white; text-align: center;">
+                            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;">
+                                <iframe src="${embedUrl}" 
+                                        style="width: 100%; height: 100%; border: none; border-radius: 15px;"
+                                        allow="autoplay; fullscreen"
+                                        loading="lazy"
+                                        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                </iframe>
+                            </div>
+                            <div style="z-index: 2; display: none; flex-direction: column; align-items: center; padding: 2rem;">
+                                <div style="font-size: 3rem; margin-bottom: 1rem;">🎥</div>
+                                <div style="font-size: 1.4rem; font-weight: 600; margin-bottom: 0.5rem;">${team.name} Demo Video</div>
+                                <div style="margin-bottom: 1.5rem; opacity: 0.9;">Video embedding not available</div>
+                                <div class="video-buttons">
+                                    <a href="${team.videoLink}" target="_blank" class="video-btn">
+                                        ▶️ Watch Video
+                                    </a>
+                                    <a href="${team.videoLink.replace('/view', '/edit')}" target="_blank" class="video-btn">
+                                        📱 Mobile View
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="team-info">
+                        <div class="info-section">
+                            <div class="info-title">📊 Slide Deck</div>
+                            <div class="info-content">
+                                <a href="${team.slidedeckLink}" target="_blank" class="info-link">View Presentation Slides</a>
+                            </div>
+                        </div>
+                        
+                        <div class="info-section">
+                            <div class="info-title">💡 Problem-Solution Fit</div>
+                            <div class="info-content">${team.problemSolution}</div>
+                        </div>
+                        
+                        <div class="info-section">
+                            <div class="info-title">🏗️ Architecture Diagram</div>
+                            <div class="info-content">
+                                <a href="${team.architectureLink}" target="_blank" class="info-link">View System Architecture</a>
+                            </div>
+                        </div>
+                        
+                        <div class="info-section">
+                            <div class="info-title">📈 Impact Metrics & ROI Estimate</div>
+                            <div class="info-content">${team.impactMetrics}</div>
+                        </div>
+                    </div>
+                `;
+                
+                teamContents.appendChild(teamContent);
             });
         }
 
-        // Open modal with team details
-        function openModal(teamIndex) {
-            const team = teams[teamIndex];
-            const modal = document.getElementById('teamModal');
+        // Select team function
+        function selectTeam(teamIndex) {
+            // Remove active class from all cards
+            document.querySelectorAll('.team-card').forEach(card => {
+                card.classList.remove('active');
+            });
             
-            // Set modal header
-            document.getElementById('modalTeamName').textContent = team.name;
-            document.getElementById('modalCaptain').textContent = `Team Captain: ${team.captain}`;
+            // Add active class to selected card
+            document.querySelector(`[data-team="${teamIndex}"]`).classList.add('active');
             
-            // Handle video display
-            const videoContainer = document.getElementById('videoContainer');
-            const embedUrl = convertGoogleDriveLink(team.videoLink);
+            // Hide placeholder
+            document.getElementById('contentPlaceholder').style.display = 'none';
             
-            // Try to embed the video, with fallback options
-            videoContainer.innerHTML = `
-                <div style="position: relative; width: 100%; height: 400px; border-radius: 15px; overflow: hidden; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; color: white; text-align: center;">
-                    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;">
-                        <iframe src="${embedUrl}" 
-                                style="width: 100%; height: 100%; border: none; border-radius: 15px;"
-                                allow="autoplay; fullscreen"
-                                loading="lazy"
-                                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        </iframe>
-                    </div>
-                    <div style="z-index: 2; display: none; flex-direction: column; align-items: center; padding: 2rem;">
-                        <div style="font-size: 3rem; margin-bottom: 1rem;">🎥</div>
-                        <div style="font-size: 1.4rem; font-weight: 600; margin-bottom: 0.5rem;">${team.name} Demo Video</div>
-                        <div style="margin-bottom: 1.5rem; opacity: 0.9;">Video embedding not available</div>
-                        <div class="video-buttons">
-                            <a href="${team.videoLink}" target="_blank" class="video-btn">
-                                ▶️ Watch Video
-                            </a>
-                            <a href="${team.videoLink.replace('/view', '/edit')}" target="_blank" class="video-btn">
-                                📱 Mobile View
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            `;
+            // Hide all team contents
+            document.querySelectorAll('.team-content').forEach(content => {
+                content.classList.remove('active');
+            });
             
-            // Add fallback for iframe loading issues
+            // Show selected team content
+            document.querySelector(`.team-content[data-team="${teamIndex}"]`).classList.add('active');
+            
+            // Handle iframe loading issues with fallback
             setTimeout(() => {
-                const iframe = videoContainer.querySelector('iframe');
-                const fallback = videoContainer.querySelector('[style*="z-index: 2"]');
+                const activeContent = document.querySelector(`.team-content[data-team="${teamIndex}"]`);
+                const iframe = activeContent?.querySelector('iframe');
+                const fallback = activeContent?.querySelector('[style*="z-index: 2"]');
                 
                 if (iframe && !iframe.contentDocument) {
                     iframe.style.display = 'none';
@@ -501,66 +616,11 @@
                     }
                 }
             }, 3000);
-            
-            // Populate team information
-            const teamInfo = document.getElementById('teamInfo');
-            teamInfo.innerHTML = `
-                <div class="info-section">
-                    <div class="info-title">📊 Slide Deck</div>
-                    <div class="info-content">
-                        <a href="${team.slidedeckLink}" target="_blank" class="info-link">View Presentation Slides</a>
-                    </div>
-                </div>
-                
-                <div class="info-section">
-                    <div class="info-title">💡 Problem-Solution Fit</div>
-                    <div class="info-content">${team.problemSolution}</div>
-                </div>
-                
-                <div class="info-section">
-                    <div class="info-title">🏗️ Architecture Diagram</div>
-                    <div class="info-content">
-                        <a href="${team.architectureLink}" target="_blank" class="info-link">View System Architecture</a>
-                    </div>
-                </div>
-                
-                <div class="info-section">
-                    <div class="info-title">📈 Impact Metrics & ROI Estimate</div>
-                    <div class="info-content">${team.impactMetrics}</div>
-                </div>
-            `;
-            
-            // Show modal
-            modal.style.display = 'block';
-            document.body.style.overflow = 'hidden'; // Prevent background scrolling
         }
 
-        // Close modal
-        function closeModal() {
-            document.getElementById('teamModal').style.display = 'none';
-            document.body.style.overflow = 'auto'; // Restore scrolling
-        }
-
-        // Event listeners
+        // Initialize the application
         document.addEventListener('DOMContentLoaded', function() {
-            generateTeamCards();
-            
-            // Close modal when clicking the X
-            document.querySelector('.close').addEventListener('click', closeModal);
-            
-            // Close modal when clicking outside
-            document.getElementById('teamModal').addEventListener('click', function(event) {
-                if (event.target === this) {
-                    closeModal();
-                }
-            });
-            
-            // Close modal with Escape key
-            document.addEventListener('keydown', function(event) {
-                if (event.key === 'Escape') {
-                    closeModal();
-                }
-            });
+            generateTeamElements();
         });
     </script>
 </body>
