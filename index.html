@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hackathon 2025 - Team Showcase</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* Base styles and resets */
         * {
             margin: 0;
             padding: 0;
@@ -13,21 +15,29 @@
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #2563eb 100%);
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #2563eb 100%); /* Deep blue gradient */
             min-height: 100vh;
             color: #333;
+            display: flex;
+            flex-direction: column;
         }
 
         .container {
             max-width: 1600px;
             margin: 0 auto;
             padding: 2rem;
+            width: 100%;
+            flex-grow: 1; /* Allow container to grow and take available space */
+            display: flex;
+            flex-direction: column;
         }
 
+        /* Header styles */
         .header {
             text-align: center;
             margin-bottom: 2rem;
             color: white;
+            padding-bottom: 1rem;
         }
 
         .header .logo-container {
@@ -39,115 +49,128 @@
         }
 
         .header .logo {
-            width: 50px;
-            height: 50px;
+            width: 60px; /* Increased size for image */
+            height: 60px;
             background: white;
-            border-radius: 8px;
+            border-radius: 12px; /* Slightly more rounded */
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 6px;
+            padding: 8px; /* Slightly more padding */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2); /* Subtle shadow for logo */
         }
 
-        .header .logo svg {
+        .header .logo img {
             width: 100%;
             height: 100%;
+            object-fit: contain; /* Ensure image fits without distortion */
+            border-radius: 8px; /* Match outer border radius */
         }
 
         .header .brand-text {
-            font-size: 1.5rem;
+            font-size: 1.8rem; /* Larger brand text */
             font-weight: 700;
             color: white;
-            letter-spacing: 1px;
-        }
-
-        .header h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
+            letter-spacing: 1.5px; /* More spacing */
             text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
-        .header p {
-            font-size: 1.1rem;
-            opacity: 0.9;
+        .header h1 {
+            font-size: 3rem; /* Larger main title */
+            font-weight: 800; /* Bolder */
+            margin-bottom: 0.75rem;
+            text-shadow: 0 3px 6px rgba(0,0,0,0.4);
         }
 
+        .header p {
+            font-size: 1.2rem; /* Larger subtitle */
+            opacity: 0.95;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+
+        /* Main content layout */
         .main-content {
             display: grid;
-            grid-template-columns: 400px 1fr;
+            grid-template-columns: 400px 1fr; /* Fixed sidebar width, flexible content */
             gap: 2rem;
-            height: calc(100vh - 200px);
-            min-height: 600px;
+            flex-grow: 1; /* Allow main content to take remaining space */
+            min-height: 600px; /* Minimum height for desktop */
         }
 
+        /* Teams sidebar */
         .teams-sidebar {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             border-radius: 20px;
             padding: 1.5rem;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            overflow-y: auto;
-            height: 100%;
+            overflow-y: auto; /* Scrollable if many teams */
+            height: 100%; /* Fill parent height */
         }
 
         .sidebar-title {
-            font-size: 1.3rem;
-            font-weight: 600;
+            font-size: 1.4rem; /* Slightly larger */
+            font-weight: 700; /* Bolder */
             color: #1e3a8a;
             margin-bottom: 1rem;
             text-align: center;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid #cbd5e1; /* Darker border */
         }
 
         .team-card {
             background: white;
-            border-radius: 12px;
-            padding: 1rem;
+            border-radius: 15px; /* More rounded */
+            padding: 1rem 1.25rem; /* More horizontal padding */
             margin-bottom: 0.75rem;
             cursor: pointer;
             transition: all 0.3s ease;
             border: 2px solid transparent;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* More pronounced shadow */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 80px; /* Minimum height for touch target */
         }
 
         .team-card:hover {
-            transform: translateX(5px);
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-            border-color: #e2e8f0;
+            transform: translateY(-3px); /* Lift effect */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            border-color: #a7bedd; /* Subtle blue border on hover */
         }
 
         .team-card.active {
             background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #2563eb 100%);
             color: white;
-            transform: translateX(5px);
-            box-shadow: 0 6px 20px rgba(30, 58, 138, 0.3);
+            transform: translateY(-5px); /* More pronounced lift when active */
+            box-shadow: 0 10px 25px rgba(30, 58, 138, 0.4);
+            border-color: #ffffff; /* White border for active */
         }
 
         .team-name {
-            font-size: 1.1rem;
-            font-weight: 600;
+            font-size: 1.2rem; /* Larger team name */
+            font-weight: 700;
             margin-bottom: 0.3rem;
         }
 
         .team-captain {
-            font-size: 0.85rem;
-            opacity: 0.8;
+            font-size: 0.9rem; /* Slightly larger */
+            opacity: 0.85;
         }
 
         .team-card.active .team-captain {
-            opacity: 0.9;
+            opacity: 0.95;
         }
 
+        /* Content area */
         .content-area {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             border-radius: 20px;
-            padding: 2rem;
+            padding: 2.5rem; /* More padding */
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
             overflow-y: auto;
-            height: 100%;
+            height: 100%; /* Fill parent height */
         }
 
         .content-placeholder {
@@ -156,8 +179,9 @@
             justify-content: center;
             height: 100%;
             color: #64748b;
-            font-size: 1.2rem;
+            font-size: 1.4rem; /* Larger placeholder text */
             text-align: center;
+            flex-direction: column;
         }
 
         .team-content {
@@ -170,77 +194,89 @@
         }
 
         .content-header {
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem; /* More space below header */
             border-bottom: 2px solid #e2e8f0;
-            padding-bottom: 1rem;
+            padding-bottom: 1.5rem;
         }
 
         .content-team-name {
-            font-size: 2rem;
-            font-weight: 700;
+            font-size: 2.5rem; /* Larger team name in content */
+            font-weight: 800;
             color: #1e3a8a;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.75rem;
         }
 
         .content-captain {
             color: #64748b;
-            font-size: 1.1rem;
-        }
-
-        .video-container {
-            width: 100%;
-            margin-bottom: 2rem;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .video-embed {
-            width: 100%;
-            height: 400px;
-            border: none;
-            border-radius: 15px;
-        }
-
-        .team-info {
-            display: grid;
-            gap: 1.5rem;
-        }
-
-        .info-section {
-            background: #f8fafc;
-            padding: 1.5rem;
-            border-radius: 15px;
-            border-left: 4px solid #1e3a8a;
-        }
-
-        .info-title {
-            font-weight: 600;
-            color: #1e3a8a;
-            margin-bottom: 0.5rem;
-            font-size: 1.1rem;
-        }
-
-        .info-content {
-            color: #475569;
-            line-height: 1.6;
-        }
-
-        .info-link {
-            color: #1e3a8a;
-            text-decoration: none;
+            font-size: 1.2rem;
             font-weight: 500;
         }
 
-        .info-link:hover {
-            text-decoration: underline;
-            color: #2563eb;
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio (height / width * 100%) */
+            margin-bottom: 2rem;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #2563eb 100%); /* Placeholder background */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .video-embed {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 15px;
+            background-color: black; /* Ensure black background for videos */
+        }
+
+        /* Fallback for video when embedding fails */
+        .video-fallback {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2; /* Ensure it's above the iframe when active */
+            display: none; /* Hidden by default */
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            color: white;
+            text-align: center;
+        }
+
+        .video-fallback .icon {
+            font-size: 4rem; /* Larger icon */
+            margin-bottom: 1rem;
+        }
+
+        .video-fallback .title {
+            font-size: 1.8rem; /* Larger title */
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .video-fallback .message {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
         }
 
         .video-buttons {
             display: flex;
             gap: 1rem;
             margin-top: 1rem;
+            flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+            justify-content: center;
         }
 
         .video-btn {
@@ -249,22 +285,69 @@
             text-decoration: none;
             padding: 12px 24px;
             border-radius: 25px;
-            font-weight: 500;
+            font-weight: 600; /* Bolder text */
             transition: all 0.3s ease;
             border: 1px solid rgba(255,255,255,0.3);
             display: inline-flex;
             align-items: center;
             gap: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
         .video-btn:hover {
             background: rgba(255,255,255,0.3);
-            transform: translateY(-2px);
+            transform: translateY(-3px); /* Lift effect */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
+        .team-info {
+            display: grid;
+            gap: 1.75rem; /* More spacing between sections */
+        }
+
+        .info-section {
+            background: #f8fafc;
+            padding: 1.75rem; /* More padding */
+            border-radius: 15px;
+            border-left: 5px solid #1e3a8a; /* Thicker border */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); /* Subtle shadow */
+        }
+
+        .info-title {
+            font-weight: 700; /* Bolder */
+            color: #1e3a8a;
+            margin-bottom: 0.75rem;
+            font-size: 1.2rem; /* Larger title */
+        }
+
+        .info-content {
+            color: #475569;
+            line-height: 1.7; /* Better readability */
+            font-size: 1rem;
+        }
+
+        .info-link {
+            color: #1e3a8a;
+            text-decoration: none;
+            font-weight: 600; /* Bolder link text */
+            transition: color 0.2s ease, text-decoration 0.2s ease;
+        }
+
+        .info-link:hover {
+            text-decoration: underline;
+            color: #2563eb;
+        }
+
+        /* Responsive adjustments */
         @media (max-width: 1200px) {
             .main-content {
                 grid-template-columns: 350px 1fr;
+            }
+            .header h1 {
+                font-size: 2.75rem;
+            }
+            .content-team-name {
+                font-size: 2.2rem;
             }
         }
 
@@ -274,7 +357,7 @@
             }
             
             .header h1 {
-                font-size: 2rem;
+                font-size: 2.2rem;
             }
 
             .header .logo-container {
@@ -283,25 +366,32 @@
             }
 
             .header .brand-text {
-                font-size: 1.3rem;
+                font-size: 1.5rem;
             }
             
             .main-content {
-                grid-template-columns: 1fr;
-                height: auto;
+                grid-template-columns: 1fr; /* Stack columns */
+                height: auto; /* Allow height to adjust */
             }
 
             .teams-sidebar {
                 height: auto;
-                max-height: 300px;
+                max-height: 400px; /* Max height for scrollable sidebar on smaller screens */
             }
 
             .content-area {
-                height: 600px;
+                height: auto; /* Allow content area to adjust height */
+                min-height: 500px; /* Minimum height for content area */
             }
 
             .video-buttons {
-                flex-direction: column;
+                flex-direction: column; /* Stack video buttons */
+                align-items: center;
+            }
+
+            .video-btn {
+                width: 100%; /* Full width buttons */
+                max-width: 250px; /* Limit width for aesthetics */
             }
         }
 
@@ -316,11 +406,54 @@
             }
 
             .content-team-name {
-                font-size: 1.5rem;
+                font-size: 1.8rem;
             }
 
             .video-container {
-                height: 250px;
+                padding-bottom: 65%; /* Adjust aspect ratio for smaller screens if needed */
+            }
+            .video-fallback .icon {
+                font-size: 3rem;
+            }
+            .video-fallback .title {
+                font-size: 1.5rem;
+            }
+            .video-fallback .message {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            .header p {
+                font-size: 1rem;
+            }
+            .header .brand-text {
+                font-size: 1.3rem;
+            }
+            .teams-sidebar,
+            .content-area {
+                padding: 1rem;
+            }
+            .content-team-name {
+                font-size: 1.5rem;
+            }
+            .content-captain {
+                font-size: 1rem;
+            }
+            .info-section {
+                padding: 1.25rem;
+            }
+            .info-title {
+                font-size: 1.1rem;
+            }
+            .info-content {
+                font-size: 0.95rem;
+            }
+            .video-container {
+                padding-bottom: 75%; /* More height on very small screens */
             }
         }
     </style>
@@ -330,16 +463,8 @@
         <div class="header">
             <div class="logo-container">
                 <div class="logo">
-                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                        <!-- Cloudwerx Wing Logo -->
-                        <path d="M20,70 Q30,20 50,30 Q70,40 80,20 Q85,25 80,35 Q70,50 50,40 Q30,30 20,70Z" fill="#1e3a8a"/>
-                        <path d="M15,75 Q25,25 45,35 Q65,45 75,25 Q80,30 75,40 Q65,55 45,45 Q25,35 15,75Z" fill="#2563eb"/>
-                        <path d="M10,80 Q20,30 40,40 Q60,50 70,30 Q75,35 70,45 Q60,60 40,50 Q20,40 10,80Z" fill="#3b82f6"/>
-                        <!-- Cloud element -->
-                        <circle cx="25" cy="25" r="8" fill="#1e3a8a" opacity="0.7"/>
-                        <circle cx="35" cy="20" r="6" fill="#2563eb" opacity="0.7"/>
-                        <circle cx="45" cy="25" r="7" fill="#3b82f6" opacity="0.7"/>
-                    </svg>
+                    <!-- Replaced SVG with image -->
+                    <img src="image_c64105.png" alt="Cloudwerx Logo">
                 </div>
                 <div class="brand-text">CLOUDWERX</div>
             </div>
@@ -372,26 +497,30 @@
 
     <script>
         // Helper function to convert Google Drive links to embed format
+        // Google Drive embed format is generally 'https://drive.google.com/file/d/{FILE_ID}/preview'
         function convertGoogleDriveLink(url) {
-            // Handle different Google Drive URL formats
             let fileId = '';
             
+            // Check for common Google Drive URL patterns
             if (url.includes('/file/d/')) {
-                // Format: https://drive.google.com/file/d/FILE_ID/view
+                // Example: https://drive.google.com/file/d/FILE_ID/view?usp=drive_link
                 fileId = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/)?.[1];
             } else if (url.includes('id=')) {
-                // Format: https://drive.google.com/open?id=FILE_ID
+                // Example: https://drive.google.com/open?id=FILE_ID
                 fileId = url.match(/id=([a-zA-Z0-9_-]+)/)?.[1];
             }
             
             if (fileId) {
+                // Construct the embed URL
                 return `https://drive.google.com/file/d/${fileId}/preview`;
             }
             
-            return url; // Return original if can't parse
+            // If the URL is not a recognized Google Drive link, return it as is
+            // It might be a direct video URL or another embeddable link
+            return url;
         }
 
-        // Team data structure
+        // Team data structure - Contains all information for each team
         const teams = [
             {
                 name: "AgentX",
@@ -492,16 +621,16 @@
             }
         ];
 
-        // Generate team cards and content
+        // Function to generate team cards and content dynamically
         function generateTeamElements() {
             const teamsContainer = document.getElementById('teamsContainer');
             const teamContents = document.getElementById('teamContents');
             
-            teamsContainer.innerHTML = '';
-            teamContents.innerHTML = '';
+            teamsContainer.innerHTML = ''; // Clear existing team cards
+            teamContents.innerHTML = ''; // Clear existing team content
 
             teams.forEach((team, index) => {
-                // Generate team card
+                // Create and append team card to the sidebar
                 const teamCard = document.createElement('div');
                 teamCard.className = 'team-card';
                 teamCard.setAttribute('data-team', index);
@@ -509,10 +638,10 @@
                     <div class="team-name">${team.name}</div>
                     <div class="team-captain">Captain: ${team.captain}</div>
                 `;
-                teamCard.addEventListener('click', () => selectTeam(index));
+                teamCard.addEventListener('click', () => selectTeam(index)); // Add click listener
                 teamsContainer.appendChild(teamCard);
 
-                // Generate team content
+                // Create and append team content div (initially hidden)
                 const teamContent = document.createElement('div');
                 teamContent.className = 'team-content';
                 teamContent.setAttribute('data-team', index);
@@ -526,27 +655,24 @@
                     </div>
                     
                     <div class="video-container">
-                        <div style="position: relative; width: 100%; height: 400px; border-radius: 15px; overflow: hidden; background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #2563eb 100%); display: flex; align-items: center; justify-content: center; color: white; text-align: center;">
-                            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;">
-                                <iframe src="${embedUrl}" 
-                                        style="width: 100%; height: 100%; border: none; border-radius: 15px;"
-                                        allow="autoplay; fullscreen"
-                                        loading="lazy"
-                                        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                                </iframe>
-                            </div>
-                            <div style="z-index: 2; display: none; flex-direction: column; align-items: center; padding: 2rem;">
-                                <div style="font-size: 3rem; margin-bottom: 1rem;">🎥</div>
-                                <div style="font-size: 1.4rem; font-weight: 600; margin-bottom: 0.5rem;">${team.name} Demo Video</div>
-                                <div style="margin-bottom: 1.5rem; opacity: 0.9;">Video embedding not available</div>
-                                <div class="video-buttons">
-                                    <a href="${team.videoLink}" target="_blank" class="video-btn">
-                                        ▶️ Watch Video
-                                    </a>
-                                    <a href="${team.videoLink.replace('/view', '/edit')}" target="_blank" class="video-btn">
-                                        📱 Mobile View
-                                    </a>
-                                </div>
+                        <iframe class="video-embed"
+                                src="${embedUrl}" 
+                                allow="autoplay; fullscreen; picture-in-picture"
+                                loading="lazy"
+                                allowfullscreen
+                                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        </iframe>
+                        <div class="video-fallback">
+                            <div class="icon">🎥</div>
+                            <div class="title">${team.name} Demo Video</div>
+                            <div class="message">Video embedding not available directly. Please use the links below to watch the video.</div>
+                            <div class="video-buttons">
+                                <a href="${team.videoLink}" target="_blank" class="video-btn">
+                                    ▶️ Watch Video
+                                </a>
+                                <a href="${team.videoLink}" target="_blank" class="video-btn">
+                                    📱 Mobile View
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -582,43 +708,54 @@
             });
         }
 
-        // Select team function
+        // Function to handle team selection and display relevant content
         function selectTeam(teamIndex) {
-            // Remove active class from all cards
+            // Remove 'active' class from all team cards
             document.querySelectorAll('.team-card').forEach(card => {
                 card.classList.remove('active');
             });
             
-            // Add active class to selected card
-            document.querySelector(`[data-team="${teamIndex}"]`).classList.add('active');
+            // Add 'active' class to the selected team card
+            const selectedCard = document.querySelector(`[data-team="${teamIndex}"]`);
+            if (selectedCard) {
+                selectedCard.classList.add('active');
+            }
             
-            // Hide placeholder
+            // Hide the initial content placeholder
             document.getElementById('contentPlaceholder').style.display = 'none';
             
-            // Hide all team contents
+            // Hide all team content sections
             document.querySelectorAll('.team-content').forEach(content => {
                 content.classList.remove('active');
             });
             
-            // Show selected team content
-            document.querySelector(`.team-content[data-team="${teamIndex}"]`).classList.add('active');
-            
-            // Handle iframe loading issues with fallback
-            setTimeout(() => {
-                const activeContent = document.querySelector(`.team-content[data-team="${teamIndex}"]`);
-                const iframe = activeContent?.querySelector('iframe');
-                const fallback = activeContent?.querySelector('[style*="z-index: 2"]');
-                
-                if (iframe && !iframe.contentDocument) {
-                    iframe.style.display = 'none';
-                    if (fallback) {
-                        fallback.style.display = 'flex';
+            // Show the content for the selected team
+            const selectedContent = document.querySelector(`.team-content[data-team="${teamIndex}"]`);
+            if (selectedContent) {
+                selectedContent.classList.add('active');
+
+                // Reset iframe and check for loading issues after a short delay
+                // This helps in cases where iframe content might not load immediately
+                setTimeout(() => {
+                    const iframe = selectedContent.querySelector('.video-embed');
+                    const fallback = selectedContent.querySelector('.video-fallback');
+
+                    // If iframe fails to load (e.g., due to CORS or sharing settings), show fallback
+                    // Note: checking iframe.contentDocument or iframe.readyState might not work reliably
+                    // across all browsers/security contexts for cross-origin iframes.
+                    // The onerror attribute on the iframe is the primary mechanism.
+                    if (iframe && iframe.style.display === 'none') { // If onerror hid it
+                        if (fallback) {
+                            fallback.style.display = 'flex';
+                        }
+                    } else if (iframe && fallback) { // Ensure fallback is hidden if iframe is visible
+                        fallback.style.display = 'none';
                     }
-                }
-            }, 3000);
+                }, 500); // Small delay to allow iframe to attempt loading
+            }
         }
 
-        // Initialize the application
+        // Initialize the application when the DOM is fully loaded
         document.addEventListener('DOMContentLoaded', function() {
             generateTeamElements();
         });
