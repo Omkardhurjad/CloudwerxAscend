@@ -38,6 +38,7 @@
             margin-bottom: 2rem;
             color: white;
             padding-bottom: 1rem;
+            position: relative; /* Needed for positioning the vote button */
         }
 
         .header .logo-container {
@@ -86,6 +87,42 @@
             font-size: 1.2rem; /* Larger subtitle */
             opacity: 0.95;
             text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+            margin-bottom: 0.5rem; /* Space before marquee */
+        }
+
+        /* Marquee styles */
+        .header .event-marquee {
+            font-size: 1.1rem;
+            color: #a3e635; /* Bright green for attention */
+            font-weight: 600;
+            padding: 0.5rem 0;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+            white-space: nowrap; /* Ensure text stays on one line within marquee */
+        }
+        /* Vote button styles */
+        .vote-button {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            background-color: #f97316; /* Orange color */
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: 2px solid #ea580c;
+        }
+
+        .vote-button:hover {
+            background-color: #ea580c;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
         }
 
         /* Main content layout */
@@ -402,6 +439,12 @@
             .content-team-name {
                 font-size: 2.2rem;
             }
+            .vote-button {
+                top: 1.5rem;
+                right: 1.5rem;
+                padding: 0.7rem 1.3rem;
+                font-size: 0.9rem;
+            }
         }
 
         @media (max-width: 968px) {
@@ -445,6 +488,20 @@
             .embed-btn {
                 width: 100%; /* Full width buttons */
                 max-width: 250px; /* Limit width for aesthetics */
+            }
+            .vote-button {
+                position: static; /* Remove absolute positioning on small screens */
+                margin-top: 1rem; /* Add margin to separate from other header elements */
+                width: fit-content;
+                align-self: center; /* Center the button in flex container */
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .header {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
             }
         }
 
@@ -514,6 +571,11 @@
 <body>
     <div class="container">
         <div class="header">
+            <!-- Vote Button -->
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSetHmFRuscmQSudE3iugcu5duIvWv4sXtMsUP3QmHc65jMHPA/viewform?usp=sharing&ouid=116365547337978111923" target="_blank" class="vote-button">
+                🗳️ Vote Now!
+            </a>
+
             <div class="logo-container">
                 <div class="logo">
                     <img src="https://github.com/Omkardhurjad/test/blob/main/images.png?raw=true" alt="Cloudwerx Logo">
@@ -522,6 +584,10 @@
             </div>
             <h1>Hackathon 2025</h1>
             <p>Team Showcase - 11 Amazing Projects</p>
+            <!-- Marquee below the subtitle -->
+            <marquee class="event-marquee" behavior="scroll" direction="left" scrollamount="5">
+                🌟 Don't forget to cast your vote for your favorite teams! Voting closes soon! 🌟
+            </marquee>
         </div>
 
         <div class="main-content">
@@ -574,7 +640,9 @@
                 slidedeckLink: "https://docs.google.com/presentation/your-slides", // Placeholder, will show fallback
                 problemSolution: "Our team identified the challenge of automated customer service responses and developed an AI-powered agent that can handle complex queries with 95% accuracy, reducing response time from hours to seconds.",
                 architectureLink: "https://your-architecture-diagram-link.com", // Placeholder
-                impactMetrics: "Expected 40% reduction in customer service costs, 60% improvement in response time, and potential ROI of 300% within first year of implementation."
+                impactMetrics: "Expected 40% reduction in customer service costs, 60% improvement in response time, and potential ROI of 300% within first year of implementation.",
+                bestCollaboration: "Our team effectively utilized agile methodologies, holding daily stand-ups and leveraging collaborative coding tools to ensure seamless integration of components and rapid iteration. Each member took ownership of distinct modules while maintaining open communication channels, leading to efficient problem-solving and a highly cohesive final product.",
+                bestAI: "AgentX employs a novel hybrid AI architecture combining a deep learning neural network for natural language understanding with a rules-based expert system for critical decision-making. This allows for both nuanced conversational abilities and robust adherence to predefined business logic, setting a new standard for intelligent automation in customer service."
             },
             {
                 name: "The AIvengers",
@@ -583,7 +651,9 @@
                 slidedeckLink: "https://docs.google.com/presentation/d/1gPnUZSezgzzuin8F-3--0LBAN_jzkjzw5TcFukpawic/edit?usp=sharing",
                 problemSolution: "We tackled the issue of data silos in enterprise environments by creating an intelligent data integration platform that uses ML to automatically map and synchronize data across different systems.",
                 architectureLink: "https://drive.google.com/file/d/1lHWkAIwiME3SB1MRhT5IkSWNVNN_x2Ps/view?usp=drive_link",
-                impactMetrics: "Ask from anywhere - users can fetch information from Slack , Personalized & relevant information retrieval, Faster answers"
+                impactMetrics: "Ask from anywhere - users can fetch information from Slack , Personalized & relevant information retrieval, Faster answers",
+                bestCollaboration: "The AIvengers demonstrated exceptional cross-functional collaboration, with team members from diverse backgrounds (data science, UX design, backend engineering) working in sync. We established clear communication protocols and used a shared knowledge base, which allowed us to quickly adapt to challenges and integrate complex components efficiently.",
+                bestAI: "Our data integration platform utilizes a self-learning ML model that continuously optimizes data mapping and synchronization rules based on usage patterns and feedback. This intelligent automation not only reduces manual effort but also improves data quality and consistency across disparate enterprise systems over time."
             },
             {
                 name: "Ctrl+Alt+Elite",
@@ -592,7 +662,9 @@
                 slidedeckLink: "https://docs.google.com/presentation/d/1gPnUZSezgzzuin8F-3--0LBAN_jzkjzw5TcFukpawic/edit?slide=id.p1#slide=id.p1",
                 problemSolution: "Test",
                 architectureLink: "https://your-architecture-diagram-link.com", // Placeholder
-                impactMetrics: "N/A" // Add a placeholder or actual metric
+                impactMetrics: "N/A", // Add a placeholder or actual metric
+                bestCollaboration: "N/A",
+                bestAI: "N/A"
             },
             {
                 name: "InsightHackers",
@@ -601,7 +673,9 @@
                 slidedeckLink: "https://docs.google.com/presentation/your-slides", // Placeholder
                 problemSolution: "We developed an advanced analytics platform that transforms raw business data into actionable insights using natural language processing and predictive modeling.",
                 architectureLink: "https://your-architecture-diagram-link.com", // Placeholder
-                impactMetrics: "35% improvement in decision-making speed, 28% increase in revenue prediction accuracy, and 200% ROI within 18 months."
+                impactMetrics: "35% improvement in decision-making speed, 28% increase in revenue prediction accuracy, and 200% ROI within 18 months.",
+                bestCollaboration: "The InsightHackers embraced a highly iterative and feedback-driven approach. We conducted daily pair-programming sessions and frequent internal demos, ensuring that everyone was aligned and contributing to the core vision. Our use of a shared development environment and clear version control practices minimized conflicts and maximized collective output.",
+                bestAI: "Our analytics platform features a sophisticated NLP engine that can derive nuanced insights from unstructured text data, combined with a predictive modeling component that forecasts future trends with high accuracy. The AI's ability to learn from diverse datasets and adapt its predictions makes it a powerful tool for strategic business intelligence."
             },
             {
                 name: "AI Wizards",
@@ -610,7 +684,9 @@
                 slidedeckLink: "https://docs.google.com/presentation/your-slides", // Placeholder
                 problemSolution: "Our team created an intelligent code review system that uses machine learning to automatically detect bugs, security vulnerabilities, and suggest optimizations in real-time.",
                 architectureLink: "https://your-architecture-diagram-link.com", // Placeholder
-                impactMetrics: "70% reduction in code review time, 45% decrease in production bugs, estimated $500K annual savings in development costs."
+                impactMetrics: "70% reduction in code review time, 45% decrease in production bugs, estimated $500K annual savings in development costs.",
+                bestCollaboration: "AI Wizards fostered a culture of continuous learning and mutual support. We organized regular knowledge-sharing sessions and peer reviews, which not only improved code quality but also upskilled every team member. Our collective dedication to open-source contributions also strengthened our team bond.",
+                bestAI: "The intelligent code review system leverages a custom-trained machine learning model on a vast dataset of secure and insecure code patterns. Its real-time suggestions and proactive bug detection capabilities, including zero-day vulnerability identification, demonstrate a cutting-edge application of AI in software development, significantly improving code integrity and security posture."
             },
             {
                 name: "LLMao Squad",
@@ -619,7 +695,9 @@
                 slidedeckLink: "https://docs.google.com/presentation/your-slides", // Placeholder
                 problemSolution: "We built a personalized learning assistant that adapts to individual learning styles and provides customized educational content using large language models and cognitive science principles.",
                 architectureLink: "https://your-architecture-diagram-link.com", // Placeholder
-                impactMetrics: "60% improvement in learning retention, 40% reduction in study time, potential to impact 10M+ students globally."
+                impactMetrics: "60% improvement in learning retention, 40% reduction in study time, potential to impact 10M+ students globally.",
+                bestCollaboration: "LLMao Squad excelled in distributed collaboration, with team members across different time zones. We established a 'follow-the-sun' development model, passing work seamlessly and ensuring constant progress. Regular virtual brainstorming sessions and a strong emphasis on async communication kept everyone connected and productive.",
+                bestAI: "Our personalized learning assistant is powered by a fine-tuned Large Language Model (LLM) that not only generates adaptive educational content but also analyzes user engagement and performance data to dynamically adjust learning paths. This innovative application of LLMs creates a truly individualized learning experience, enhancing comprehension and retention at scale."
             },
             {
                 name: "Cloudwerx Agents",
@@ -628,7 +706,9 @@
                 slidedeckLink: "https://docs.google.com/presentation/your-slides", // Placeholder
                 problemSolution: "Our solution optimizes cloud infrastructure costs by implementing intelligent resource management that automatically scales and allocates resources based on predictive usage patterns.",
                 architectureLink: "https://your-architecture-diagram-link.com", // Placeholder
-                impactMetrics: "30-50% reduction in cloud costs, 99.9% uptime guarantee, projected savings of $1M+ annually for enterprise clients."
+                impactMetrics: "30-50% reduction in cloud costs, 99.9% uptime guarantee, projected savings of $1M+ annually for enterprise clients.",
+                bestCollaboration: "Cloudwerx Agents fostered an environment of radical transparency and shared responsibility. We used real-time project management tools to track progress and identify blockers, and actively sought diverse perspectives in all decision-making processes. Our joint commitment to quality assurance ensured a robust and reliable solution.",
+                bestAI: "The core of our cloud cost optimization solution is an AI-driven predictive analytics engine that forecasts resource demands with unprecedented accuracy. By leveraging historical data and real-time metrics, the AI dynamically adjusts resource allocation, minimizing idle capacity and maximizing cost efficiency, representing a significant advancement in cloud financial operations."
             },
             {
                 name: "Rising Cyber Brains (RCB)",
@@ -637,7 +717,9 @@
                 slidedeckLink: "https://docs.google.com/presentation/your-slides", // Placeholder
                 problemSolution: "We developed a comprehensive cybersecurity training platform that uses gamification and AI to create personalized security awareness programs for organizations.",
                 architectureLink: "https://your-architecture-diagram-link.com", // Placeholder
-                impactMetrics: "85% improvement in security awareness scores, 60% reduction in human-error security incidents, ROI of 400% through prevented breaches."
+                impactMetrics: "85% improvement in security awareness scores, 60% reduction in human-error security incidents, ROI of 400% through prevented breaches.",
+                bestCollaboration: "RCB demonstrated exceptional synergy, with each member contributing their unique expertise in cybersecurity and gamification. We held immersive workshops to align on design principles and regularly cross-trained each other on different modules, creating a highly adaptable and resilient team.",
+                bestAI: "Our cybersecurity training platform integrates an AI engine that analyzes user behavior and performance to create highly personalized gamified learning paths. This adaptive AI identifies individual weaknesses and targets training effectively, leading to significant improvements in security awareness and a measurable reduction in human-error vulnerabilities across organizations."
             },
             {
                 name: "Binary Brains",
@@ -646,7 +728,9 @@
                 slidedeckLink: "https://docs.google.com/presentation/d/16uQWxmamlAtWO6QKrklr_qw_8EUonNGb0XFcyUiw-hc/edit?slide=id.p1&pli=1#slide=id.p1",
                 problemSolution: "test",
                 architectureLink: "https://your-architecture-diagram-link.com", // Placeholder
-                impactMetrics: "92% diagnostic accuracy, 50% reduction in misdiagnosis rates, potential to save thousands of lives and millions in healthcare costs."
+                impactMetrics: "92% diagnostic accuracy, 50% reduction in misdiagnosis rates, potential to save thousands of lives and millions in healthcare costs.",
+                bestCollaboration: "Binary Brains adopted a highly collaborative approach, utilizing daily sync-ups and a shared task board to maintain momentum. We fostered an environment where ideas were freely exchanged and constructive feedback was actively sought, leading to a highly refined and robust solution.",
+                bestAI: "The diagnostic system developed by Binary Brains leverages advanced deep learning algorithms trained on vast medical image datasets, achieving an impressive 92% diagnostic accuracy. This AI's ability to identify subtle patterns often missed by human eyes represents a significant leap forward in early disease detection and personalized medicine."
             },
             {
                 name: "PromptOps",
@@ -655,7 +739,9 @@
                 slidedeckLink: "https://docs.google.com/presentation/d/1eu8Xzc-BUd1VFj5mOVlEIz4Al_vGSwkg5UCaP7oncdE/edit?usp=drive_link",
                 problemSolution: "The Problem On large infrastructure projects, time-critical hazards often go undetected until they cause costly delays — like trench flooding from overnight rainfall. Field engineers log reports, but without real-time interpretation or alerting, response is slow. At the same time, project managers lack a consistent, system-wide view of emerging risks. Daily briefs are often assembled manually, inconsistently, or not at all — reducing confidence, situational awareness, and coordination.How We Identified the GapBy reviewing incident logs and day-start routines across roles, we saw two repeated friction points: Hazards were being recorded — but not escalated.Briefings were being written — but not informed by live system context.We saw an opportunity to address both with targeted, intelligent automation that leveraged existing field data.The Solution :We designed two connected capabilities powered by Salesforce Agentforce:🛰️ GeoSentinel_Agent (agentic):Triggered by new case entries, this Agentforce agent detects hazard types based on field data, checks GIS overlays or weather forecasts via Apex, and raises alerts. If risk is confirmed, it generates a Gemini-based impact summary, creates a follow-up task, and pings the project manager via Slack.🧠 Briefing Intelligence (non-agentic, Gemini-based):Built using Prompt Builder, this intelligence scans across agent activity logs, tasks, and unresolved case data to produce a clean daily summary. It contextualises site risks, flags stale follow-ups, and delivers briefing content ready for PM dashboards or mobile delivery.Together, they close the loop between risk detection and risk communication — helping teams act faster and align earlier, without additional manual effort.",
                 architectureLink: "https://lucid.app/lucidchart/e240127c-2be7-4a64-92fe-a4a31e24cb40/edit?beaconFlowId=C03C1998FE2CD8E6&invitationId=inv_cc3917b4-6a86-4d5e-baf6-47c3c49689a1&page=5Mro32Jj5pXS#",
-                impactMetrics: "Each project saves up to 180 hours annually by automating hazard detection and briefing compilation — reducing manual prep time from nearly an hour per day to just minutes.With real-time alerts from our geospatial intelligence workflows, we've seen a 60% drop in site incidents due to faster identification and escalation of risks."
+                impactMetrics: "Each project saves up to 180 hours annually by automating hazard detection and briefing compilation — reducing manual prep time from nearly an hour per day to just minutes.With real-time alerts from our geospatial intelligence workflows, we've seen a 60% drop in site incidents due to faster identification and escalation of risks.",
+                bestCollaboration: "PromptOps exemplified seamless integration of diverse skill sets, from front-end development to complex AI prompt engineering. Our daily huddles and use of a shared documentation portal ensured everyone was on the same page, leading to efficient task handoffs and a highly synchronized development cycle.",
+                bestAI: "PromptOps' solution showcases a sophisticated application of AI through its GeoSentinel_Agent, which proactively detects hazards using field data and GIS overlays, and its Gemini-based Briefing Intelligence, which generates real-time, contextualized risk summaries. This dual AI approach significantly enhances situational awareness and accelerates response times on large infrastructure projects."
             },
             {
                 name: "The Agentic Troup",
@@ -664,7 +750,9 @@
                 slidedeckLink: "https://docs.google.com/presentation/d/1U7AGJdLSMHliISx0SCLID7r1x2LEmnIISzHcGAhD40o/edit?slide=id.p1#slide=id.p1",
                 problemSolution: "Test",
                 architectureLink: "https://lucid.app/lucidchart/c9ed1c4c-0ea3-46cb-bf05-f08f791f8158/edit?invitationId=inv_34456e44-2bb3-45ce-9483-933ef022cc9b",
-                impactMetrics: "Student Experience Metrics:960x faster response time (3 minutes vs. 2 days).60% reduction in advisor queue backlog.24/7 availability vs. current office hours."
+                impactMetrics: "Student Experience Metrics:960x faster response time (3 minutes vs. 2 days).60% reduction in advisor queue backlog.24/7 availability vs. current office hours.",
+                bestCollaboration: "The Agentic Troup demonstrated outstanding team cohesion, breaking down complex problems into manageable sub-tasks and distributing them effectively. Regular code reviews and pair-programming sessions fostered a strong sense of shared ownership and ensured high-quality deliverables across all components.",
+                bestAI: "Our solution leverages a powerful AI-driven agent framework that enables highly autonomous and proactive task execution. The AI's ability to interpret complex requests, interact with multiple systems, and learn from past interactions provides a truly intelligent and efficient automated experience, exemplified by the dramatic improvement in response times for student queries."
             }
         ];
 
@@ -734,6 +822,16 @@
                     <div class="info-section">
                         <div class="info-title">💡 Problem-Solution Fit</div>
                         <div class="info-content">${team.problemSolution}</div>
+                    </div>
+
+                    <div class="info-section">
+                        <div class="info-title">🤝 Best Team Collaboration</div>
+                        <div class="info-content">${team.bestCollaboration}</div>
+                    </div>
+
+                    <div class="info-section">
+                        <div class="info-title">🧠 Best Use of AI</div>
+                        <div class="info-content">${team.bestAI}</div>
                     </div>
                     
                     <div class="info-section">
